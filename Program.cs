@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using SeaWolf.HR.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -6,6 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IEmployeeRepository, MockEmployeeRepository>();
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<SeaWolfHRDbContext>(options => {
+    options.UseSqlServer(
+        builder.Configuration["ConnectionStrings:SeaWolfHRDbContextConnection"]);
+});
 
 var app = builder.Build();
 
