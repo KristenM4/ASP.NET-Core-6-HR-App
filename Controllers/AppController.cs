@@ -17,5 +17,15 @@ namespace SeaWolf.HR.Controllers
                 (_employeeRepository.AllEmployees);
             return View(employeeListViewModel);
         }
+
+        public IActionResult EmployeeDetails(int id)
+        {
+            var employee = _employeeRepository.GetEmployeeById(id);
+            if(employee == null)
+            {
+                return NotFound();
+            }
+            return View(employee);
+        }
     }
 }
