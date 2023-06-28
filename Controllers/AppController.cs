@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SeaWolf.HR.Models;
+using SeaWolf.HR.ViewModels;
 
 namespace SeaWolf.HR.Controllers
 {
@@ -12,7 +13,9 @@ namespace SeaWolf.HR.Controllers
         }
         public IActionResult Index()
         {
-            return View(_employeeRepository.AllEmployees);
+            EmployeeListViewModel employeeListViewModel = new EmployeeListViewModel
+                (_employeeRepository.AllEmployees);
+            return View(employeeListViewModel);
         }
     }
 }
