@@ -7,9 +7,12 @@ namespace SeaWolf.HR.Controllers
     public class AppController : Controller
     {
         private readonly IEmployeeRepository _employeeRepository;
-        public AppController(IEmployeeRepository employeeRepository)
+        private readonly ILocationRepository _locationRepository;
+
+        public AppController(IEmployeeRepository employeeRepository, ILocationRepository locationRepository)
         {
             _employeeRepository = employeeRepository;
+            _locationRepository = locationRepository;
         }
         public IActionResult Index()
         {
@@ -26,6 +29,13 @@ namespace SeaWolf.HR.Controllers
                 return NotFound();
             }
             return View(employee);
+        }
+
+        public IActionResult LocationList()
+        {
+            LocationListViewModel locationListViewModel = new LocationListViewModel
+                (_locationRepository.AllLocations);
+            return View(locationListViewModel);
         }
     }
 }
