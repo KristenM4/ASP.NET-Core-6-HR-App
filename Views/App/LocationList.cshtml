@@ -1,0 +1,8 @@
+﻿@model LocationListViewModel
+@foreach (var location in Model.Locations)
+{
+    <div>
+        <h2>@location.LocationName</h2>
+        <p>@location.AddressLine1</p>
+    </div>
+}
