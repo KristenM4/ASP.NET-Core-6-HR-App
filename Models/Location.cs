@@ -5,7 +5,7 @@
         public int LocationId { get; set; }
         public string LocationName { get; set; }
         public string Phone { get; set; }
-        public Employee? PersonInCharge { get; set; }
+        public List<Employee>? Employees { get; set; }
         public string AddressLine1 { get; set; }
         public string AddressLine2 { get; set;} = string.Empty;
         public string City { get; set; }
