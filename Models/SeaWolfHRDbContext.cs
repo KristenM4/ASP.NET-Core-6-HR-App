@@ -10,5 +10,6 @@ namespace SeaWolf.HR.Models
         }
 
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<Location> Locations { get; set; }
     }
 }
