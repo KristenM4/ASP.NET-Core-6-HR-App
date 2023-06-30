@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<SeaWolfHRDbContext>(options => {
