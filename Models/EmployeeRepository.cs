@@ -2,18 +2,18 @@
 {
     public class EmployeeRepository : IEmployeeRepository
     {
-        private readonly SeaWolfHRDbContext _seaWolfHRDbContext;
+        private readonly SeaWolfHRDbContext _context;
 
         public EmployeeRepository(SeaWolfHRDbContext seaWolfHRDbContext)
         {
-            _seaWolfHRDbContext = seaWolfHRDbContext;
+            _context = seaWolfHRDbContext;
         }
 
-        public IEnumerable<Employee> AllEmployees => _seaWolfHRDbContext.Employees;
+        public IEnumerable<Employee> AllEmployees => _context.Employees;
 
         public Employee? GetEmployeeById(int employeeId)
         {
-            return _seaWolfHRDbContext.Employees.FirstOrDefault(e => e.EmployeeId == employeeId);
+            return _context.Employees.FirstOrDefault(e => e.EmployeeId == employeeId);
         }
     }
 }
