@@ -37,5 +37,15 @@ namespace SeaWolf.HR.Controllers
                 (_locationRepository.AllLocations);
             return View(locationListViewModel);
         }
+
+        public IActionResult LocationDetails(int id)
+        {
+            var location = _locationRepository.GetLocationById(id);
+            if(location == null)
+            {
+                return NotFound();
+            }
+            return View(location);
+        }
     }
 }
