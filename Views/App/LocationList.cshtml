@@ -2,7 +2,9 @@
 @foreach (var location in Model.Locations)
 {
     <div>
-        <h2>@location.LocationName</h2>
+        <a asp-controller="App" asp-action="LocationDetails" asp-route-id="@location.LocationId">
+            <h2>@location.LocationName</h2>
+        </a>
         <p>@location.AddressLine1</p>
     </div>
 }
