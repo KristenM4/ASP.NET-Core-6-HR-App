@@ -5,3 +5,8 @@
 <p>@Model.AddressLine2</p>
 <p>@Model.City @Model.PostalCode</p>
 <p>@Model.State, @Model.Country</p>
+<h3>Employees</h3>
+@foreach(var employee in ViewBag.Employees)
+{
+    <p>@employee.FirstName</p>
+}
