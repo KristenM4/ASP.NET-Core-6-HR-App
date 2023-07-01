@@ -5,6 +5,8 @@ VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SeaWolf.HR", "SeaWolf.HR.csproj", "{BD37F4EB-18CB-4734-8C16-BF376FC963FC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeaWolf.HRTests", "..\SeaWolf.HRTests\SeaWolf.HRTests.csproj", "{765F5FE2-0586-4F98-9161-D87D91F9F614}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{BD37F4EB-18CB-4734-8C16-BF376FC963FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BD37F4EB-18CB-4734-8C16-BF376FC963FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BD37F4EB-18CB-4734-8C16-BF376FC963FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{765F5FE2-0586-4F98-9161-D87D91F9F614}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{765F5FE2-0586-4F98-9161-D87D91F9F614}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{765F5FE2-0586-4F98-9161-D87D91F9F614}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{765F5FE2-0586-4F98-9161-D87D91F9F614}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
