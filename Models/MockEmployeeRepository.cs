@@ -26,5 +26,10 @@
         {
             return AllEmployees.FirstOrDefault(e => e.EmployeeId == employeeId);
         }
+
+        public IEnumerable<Employee> GetEmployeesForLocation(int locationId)
+        {
+            return AllEmployees.Where(e => e.Location.LocationId == locationId);
+        }
     }
 }
