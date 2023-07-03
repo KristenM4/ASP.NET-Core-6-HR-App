@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Moq;
 using SeaWolf.HR.Controllers;
+using SeaWolf.HR.Models;
 using SeaWolf.HR.ViewModels;
 using SeaWolf.HRTests.Mocks;
 
@@ -7,20 +9,26 @@ namespace SeaWolf.HRTests.Controllers
 {
     public class AppControllerTests
     {
+        private readonly Mock<IEmployeeRepository> _mockEmployeeRepository;
+        private readonly Mock<ILocationRepository> _mockLocationRepository;
+
+        public AppControllerTests()
+        {
+            _mockEmployeeRepository = RepositoryMocks.GetEmployeeRepository();
+            _mockLocationRepository = RepositoryMocks.GetLocationRepository();
+        }
+
         [Fact]
         public void Index_Returns_Employees_List()
         {
-            //setup
-            var mockEmployeeRepository = RepositoryMocks.GetEmployeeRepository();
-            var mockLocationRepository = RepositoryMocks.GetLocationRepository();
+            // arrange
+            var appController = new AppController(_mockEmployeeRepository.Object,
+                _mockLocationRepository.Object);
 
-            var appController = new AppController(mockEmployeeRepository.Object,
-                mockLocationRepository.Object);
-
-            //act
+            // act
             var result = appController.Index();
 
-            //assert
+            // assert
             var viewResult = Assert.IsType<ViewResult>(result);
             var employeeListViewModel = Assert.IsAssignableFrom<EmployeeListViewModel>
                 (viewResult.ViewData.Model);
