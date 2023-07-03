@@ -34,5 +34,21 @@ namespace SeaWolf.HRTests.Controllers
                 (viewResult.ViewData.Model);
             Assert.Equal(5, employeeListViewModel.Employees.Count());
         }
+
+        [Fact]
+        public void EmployeeDetails_Returns_Employee_Details_Page()
+        {
+            // arrange
+            var appController = new AppController(_mockEmployeeRepository.Object,
+                _mockLocationRepository.Object);
+
+            // act
+            var result = appController.EmployeeDetails(1);
+
+            // assert
+            var viewResult = Assert.IsType<ViewResult>(result);
+            var employeeModel = Assert.IsAssignableFrom<Employee>(viewResult.ViewData.Model);
+            Assert.Equal("Bob", employeeModel.FirstName);
+        }
     }
 }
