@@ -46,5 +46,15 @@ namespace SeaWolf.HRTests.Controllers
             var employeeModel = Assert.IsAssignableFrom<Employee>(viewResult.ViewData.Model);
             Assert.Equal("Bob", employeeModel.FirstName);
         }
+
+        [Fact]
+        public void EmployeeDetails_Returns_NotFound_For_Invalid_Id()
+        {
+            // act
+            var result = _appController.EmployeeDetails(99);
+
+            // assert
+            var notFoundResult = Assert.IsType<NotFoundResult>(result);
+        }
     }
 }
