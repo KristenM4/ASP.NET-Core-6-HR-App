@@ -1,4 +1,5 @@
-﻿using Moq;
+﻿using Microsoft.AspNetCore.Mvc;
+using Moq;
 using SeaWolf.HR.Models;
 
 namespace SeaWolf.HRTests.Mocks
@@ -28,7 +29,11 @@ namespace SeaWolf.HRTests.Mocks
 
             var mockEmployeeRepository = new Mock<IEmployeeRepository>();
             mockEmployeeRepository.Setup(repo => repo.AllEmployees).Returns(employees);
-            mockEmployeeRepository.Setup(repo => repo.GetEmployeeById(It.IsAny<int>())).Returns(employees[0]);
+            // invalid id
+            mockEmployeeRepository.Setup(repo => repo.GetEmployeeById(99))
+                .Returns(employees.FirstOrDefault(e => e.EmployeeId == 99));
+            // valid id
+            mockEmployeeRepository.Setup(repo => repo.GetEmployeeById(1)).Returns(employees[0]);
             return mockEmployeeRepository;
         }
 
