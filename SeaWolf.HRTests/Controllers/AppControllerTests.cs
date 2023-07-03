@@ -11,22 +11,22 @@ namespace SeaWolf.HRTests.Controllers
     {
         private readonly Mock<IEmployeeRepository> _mockEmployeeRepository;
         private readonly Mock<ILocationRepository> _mockLocationRepository;
+        private readonly AppController _appController;
 
         public AppControllerTests()
         {
+            // arrange
             _mockEmployeeRepository = RepositoryMocks.GetEmployeeRepository();
             _mockLocationRepository = RepositoryMocks.GetLocationRepository();
+            _appController = new AppController(_mockEmployeeRepository.Object,
+                _mockLocationRepository.Object);
         }
 
         [Fact]
         public void Index_Returns_Employees_List()
         {
-            // arrange
-            var appController = new AppController(_mockEmployeeRepository.Object,
-                _mockLocationRepository.Object);
-
             // act
-            var result = appController.Index();
+            var result = _appController.Index();
 
             // assert
             var viewResult = Assert.IsType<ViewResult>(result);
@@ -38,12 +38,8 @@ namespace SeaWolf.HRTests.Controllers
         [Fact]
         public void EmployeeDetails_Returns_Employee_Details_Page()
         {
-            // arrange
-            var appController = new AppController(_mockEmployeeRepository.Object,
-                _mockLocationRepository.Object);
-
             // act
-            var result = appController.EmployeeDetails(1);
+            var result = _appController.EmployeeDetails(1);
 
             // assert
             var viewResult = Assert.IsType<ViewResult>(result);
