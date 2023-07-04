@@ -16,6 +16,11 @@ namespace SeaWolf.HR.Controllers
         }
         public IActionResult Index()
         {
+            return View();
+        }
+
+        public IActionResult EmployeeList()
+        {
             EmployeeListViewModel employeeListViewModel = new EmployeeListViewModel
                 (_employeeRepository.AllEmployees);
             return View(employeeListViewModel);
