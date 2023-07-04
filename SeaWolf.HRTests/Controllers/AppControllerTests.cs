@@ -23,10 +23,20 @@ namespace SeaWolf.HRTests.Controllers
         }
 
         [Fact]
-        public void Index_Returns_Employees_List()
+        public void Index_Returns_Home_Page()
         {
             // act
             var result = _appController.Index();
+
+            // assert
+            Assert.IsType<ViewResult>(result);
+        }
+
+        [Fact]
+        public void EmployeeList_Returns_Employees_List()
+        {
+            // act
+            var result = _appController.EmployeeList();
 
             // assert
             var viewResult = Assert.IsType<ViewResult>(result);
