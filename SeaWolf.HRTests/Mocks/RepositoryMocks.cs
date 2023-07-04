@@ -65,6 +65,7 @@ namespace SeaWolf.HRTests.Mocks
 
             var mockLocationRepository = new Mock<ILocationRepository>();
             mockLocationRepository.Setup(repo => repo.AllLocations).Returns(locations);
+            mockLocationRepository.Setup(repo => repo.GetLocationById(1)).Returns(locations[0]);
 
             return mockLocationRepository;
         }

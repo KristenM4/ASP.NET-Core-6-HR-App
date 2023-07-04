@@ -69,5 +69,17 @@ namespace SeaWolf.HRTests.Controllers
                 (viewResult.ViewData.Model);
             Assert.Equal(2, locationListViewModel.Locations.Count());
         }
+
+        [Fact]
+        public void LocationDetails_Returns_Location_Details_Page()
+        {
+            // act
+            var result = _appController.LocationDetails(1);
+
+            // assert
+            var viewResult = Assert.IsType<ViewResult>(result);
+            var locationModel = Assert.IsAssignableFrom<Location>(viewResult.ViewData.Model);
+            Assert.Equal("Farrington Store", locationModel.LocationName);
+        }
     }
 }
