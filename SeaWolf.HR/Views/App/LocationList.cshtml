@@ -1,37 +1,44 @@
 ﻿@model LocationListViewModel
 
-<div class="text-center">
-    <h1 class="display-4 my-4">All Locations</h1>
+<div>
+    <h1 class="display-4 my-4 text-center">All Locations</h1>
 
-    <div class="col-md-8 mx-auto text-start">
+    <div class="col-md-10 col-xl-8 mx-auto">
+        <table class="table table-hover">
+            <caption>All Locations</caption>
 
-        <div class="d-flex border-bottom fs-5">
-            <div class="col-4">
-                <p>Name</p>
-            </div>
-            <div class="col-4">
-                <p>City</p>
-            </div>
-            <div class="col-4">
-                <p>Phone</p>
-            </div>
-        </div>
+            <thead>
+                <tr class="border-bottom fs-5">
+                    <td class="col-4">
+                        <p>Name</p>
+                    </td>
+                    <td class="col-4">
+                        <p>City</p>
+                    </td>
+                    <td class="col-4">
+                        <p>Phone No.</p>
+                    </td>
+                </tr>
+            </thead>
 
-        @foreach (var location in Model.Locations)
-        {
-            <div class="d-flex border-bottom">
-                <div class="col-4">
-                    <a asp-controller="App" asp-action="LocationDetails" asp-route-id="@location.LocationId">
-                        <p>@location.LocationName</p>
-                    </a>
-                </div>
-                <div class="col-4">
-                    <p>@location.City</p>
-                </div>
-                <div class="col-4">
-                    <p>@location.Phone</p>
-                </div>
-            </div>
-        }
+            <tbody>
+                @foreach (var location in Model.Locations)
+                {
+                    <tr class="border-bottom">
+                        <td class="col-4">
+                            <a asp-controller="App" asp-action="LocationDetails" asp-route-id="@location.LocationId">
+                                <p>@location.LocationName</p>
+                            </a>
+                        </td>
+                        <td class="col-4">
+                            <p>@location.City</p>
+                        </td>
+                        <td class="col-4">
+                            <p>@location.Phone</p>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>
