@@ -81,5 +81,15 @@ namespace SeaWolf.HRTests.Controllers
             var locationModel = Assert.IsAssignableFrom<Location>(viewResult.ViewData.Model);
             Assert.Equal("Farrington Store", locationModel.LocationName);
         }
+
+        [Fact]
+        public void LocationDetails_Returns_NotFound_For_Invalid_Id()
+        {
+            // act
+            var result = _appController.LocationDetails(99);
+
+            // assert
+            var notFoundResult = Assert.IsType<NotFoundResult>(result);
+        }
     }
 }
