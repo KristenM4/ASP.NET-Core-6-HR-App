@@ -4,13 +4,37 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">All Employees</h1>
-    @foreach (var employee in Model.Employees)
-    {
-        <div>
-            <a asp-controller="App" asp-action="EmployeeDetails" asp-route-id="@employee.EmployeeId">
-                <p>@employee.FirstName @employee.LastName - @employee.Position</p>
-            </a>
+    <h1 class="display-4 my-4">All Employees</h1>
+
+    <div class="col-md-8 mx-auto text-start">
+
+        <div class="d-flex border-bottom fs-5">
+            <div class="col-4">
+                <p>Name</p>
+            </div>
+            <div class="col-4">
+                <p>Position</p>
+            </div>
+            <div class="col-4">
+                <p>Location</p>
+            </div>
         </div>
-    }
+
+        @foreach (var employee in Model.Employees)
+        {
+            <div class="d-flex border-bottom">
+                <div class="col-4">
+                    <a asp-controller="App" asp-action="EmployeeDetails" asp-route-id="@employee.EmployeeId">
+                        <p>@employee.FirstName @employee.LastName</p>
+                    </a>
+                </div>
+                <div class="col-4">
+                    <p>@employee.Position</p>
+                </div>
+                <div class="col-4">
+                    <p>@employee.Location.LocationName</p>
+                </div>
+            </div>
+        }
+    </div>
 </div>
