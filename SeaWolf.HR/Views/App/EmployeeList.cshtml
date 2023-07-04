@@ -1,0 +1,16 @@
+﻿@model EmployeeListViewModel
+@{
+    ViewData["Title"] = "Employees";
+}
+
+<div class="text-center">
+    <h1 class="display-4">All Employees</h1>
+    @foreach (var employee in Model.Employees)
+    {
+        <div>
+            <a asp-controller="App" asp-action="EmployeeDetails" asp-route-id="@employee.EmployeeId">
+                <p>@employee.FirstName @employee.LastName - @employee.Position</p>
+            </a>
+        </div>
+    }
+</div>
