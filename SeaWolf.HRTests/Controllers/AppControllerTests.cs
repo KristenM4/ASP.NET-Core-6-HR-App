@@ -56,5 +56,18 @@ namespace SeaWolf.HRTests.Controllers
             // assert
             var notFoundResult = Assert.IsType<NotFoundResult>(result);
         }
+
+        [Fact]
+        public void LocationList_Returns_List_Of_Locations()
+        {
+            // act
+            var result = _appController.LocationList();
+
+            // assert
+            var viewResult = Assert.IsType<ViewResult>(result);
+            var locationListViewModel = Assert.IsAssignableFrom<LocationListViewModel>
+                (viewResult.ViewData.Model);
+            Assert.Equal(2, locationListViewModel.Locations.Count());
+        }
     }
 }
