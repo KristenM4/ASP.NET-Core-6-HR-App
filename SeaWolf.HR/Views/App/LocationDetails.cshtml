@@ -1,12 +1,43 @@
 ﻿@model Location
 
-<h2>@Model.LocationName</h2>
-<p>@Model.AddressLine1</p>
-<p>@Model.AddressLine2</p>
-<p>@Model.City @Model.PostalCode</p>
-<p>@Model.State, @Model.Country</p>
-<h3>Employees</h3>
-@foreach(var employee in ViewBag.Employees)
-{
-    <p>@employee.FirstName</p>
-}
+<div>
+    <h1 class="display-4 my-4 text-center">Location Details</h1>
+
+    <div class="container col-md-8 mx-auto border border-secondary rounded pt-2">
+        <div class="row">
+
+            <div class="col-4">
+                <p>Location Name:</p>
+                <p>Address:</p>
+                <p>City:</p>
+                <p>Postal Code:</p>
+                <p>State:</p>
+                <p>Country:</p>
+            </div>
+
+            <div class="col-8">
+                <p>@Model.LocationName</p>
+                <p>@Model.AddressLine1 @Model.AddressLine2</p>
+                <p>@Model.City</p>
+                <p>@Model.PostalCode</p>
+                <p>@Model.State</p>
+                <p>@Model.Country</p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-md-8 mx-auto my-3">
+        <h3>Location Staff</h3>
+        @foreach (var employee in ViewBag.Employees)
+        {
+            <div class="border-bottom border-secondary">
+                <p class="mt-2">
+                    <a class="link-dark text-decoration-none" asp-controller="App" asp-action="EmployeeDetails" asp-route-id="@employee.EmployeeId">
+                        @employee.Position - @employee.FirstName @employee.LastName
+                    </a>
+                </p>
+            </div>
+        }
+    </div>
+</div>

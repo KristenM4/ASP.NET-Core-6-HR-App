@@ -1,5 +1,32 @@
 ﻿@model Employee
+@{
+    ViewBag.Title = "Employee Details";
+}
 
-<h3>@Model.FirstName @Model.LastName</h3>
-<p>@Model.Email</p>
-<p>@Model.Location.LocationName</p>
+<div>
+    <h1 class="display-4 my-4 text-center">Employee Details</h1>
+
+    <div class="container col-md-8 mx-auto border border-secondary rounded pt-2">
+        <div class="row">
+
+            <div class="col-4">
+                <p>Full Name:</p>
+                <p>Position</p>
+                <p>Location:</p>
+                <p>Date of Birth:</p>
+                <p>Phone:</p>
+                <p>Email:</p>
+            </div>
+
+            <div class="col-8">
+                <p>@Model.FirstName @Model.MiddleName @Model.LastName</p>
+                <p>@Model.Position</p>
+                <p>@Model.Location.LocationName</p>
+                <p>@Model.DateOfBirth.ToShortDateString()</p>
+                <p>@Model.Phone</p>
+                <p>@Model.Email</p>
+            </div>
+
+        </div>
+    </div>
+</div>
