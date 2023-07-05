@@ -31,5 +31,10 @@
         {
             return AllEmployees.Where(e => e.Location.LocationId == locationId);
         }
+
+        public IEnumerable<Employee> SearchEmployees(string searchQuery)
+        {
+            return AllEmployees.Where(e => e.FirstName.Contains(searchQuery));
+        }
     }
 }

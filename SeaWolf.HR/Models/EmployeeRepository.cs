@@ -22,5 +22,10 @@ namespace SeaWolf.HR.Models
         {
             return _context.Employees.Where(e => e.Location.LocationId == locationId).ToList();
         }
+
+        public IEnumerable<Employee> SearchEmployees(string searchQuery)
+        {
+            return _context.Employees.Where(e => e.FirstName.Contains(searchQuery));
+        }
     }
 }
