@@ -25,7 +25,7 @@ namespace SeaWolf.HR.Models
 
         public IEnumerable<Employee> SearchEmployees(string searchQuery)
         {
-            return _context.Employees.Where(e => e.FirstName.Contains(searchQuery));
+            return _context.Employees.Include(e => e.Location).Where(e => e.FirstName.Contains(searchQuery));
         }
     }
 }
