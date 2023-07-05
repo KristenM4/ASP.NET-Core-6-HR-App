@@ -13,5 +13,24 @@ namespace SeaWolf.HR.Controllers.Api
         {
             _employeeRepository = employeeRepository;
         }
+
+        [HttpGet]
+        public IActionResult GetAllEmployees()
+        {
+            var allEmployees = _employeeRepository.AllEmployees;
+            return Ok(allEmployees);
+        }
+
+        [HttpPost]
+        public IActionResult SearchEmployees([FromBody] string searchQuery)
+        {
+            IEnumerable<Employee> employees = new List<Employee>();
+
+            if (!string.IsNullOrEmpty(searchQuery))
+            {
+                employees = _employeeRepository.SearchEmployees(searchQuery);
+            }
+            return new JsonResult(employees);
+        }
     }
 }
