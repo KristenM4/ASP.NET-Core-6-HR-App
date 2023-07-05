@@ -3,8 +3,12 @@
     ViewBag.Title = "Employees";
 }
 
-<div>
-    <h1 class="display-4 my-4 text-center">All Employees</h1>
+<div class="text-center">
+    <h1 class="display-4 my-4 text-center">
+        All Employees
+    </h1>
+    <input id="txtEmployeeName" type="text" />
+    <button id="searchButton" class="btn btn-secondary">Search</button>
 
     <div class="col-md-10 col-xl-8 mx-auto">
         <table class="table table-hover">
@@ -45,3 +49,34 @@
         </table>
     </div>
 </div>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("button").click(function () {
+            var searchQuery = $.trim($("#txtEmployeeName").val());
+            $("caption").html("");
+            $("tbody").html("");
+            $.ajax({
+                type: "POST",
+                url: "/api/Search",
+                data: "\"" + searchQuery + "\"",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (employees) {
+                    $.each(employees, function (i, employee) {
+                        $("tbody").append($("<tr>"));
+                        appendElement = $("tbody tr").last();
+                        appendElement.append($("<td>").html('<p><a href="/app/employeedetails/' + employee.employeeId + '" class="link-dark text-decoration-none">' + employee.firstName + " " + employee.lastName + '</a></p>'));
+                        appendElement.append($("<td>").html('<p>' + employee.position + '</p>'));
+                        appendElement.append($("<td>").html('<p><a href="/app/locationdetails/' + employee.location.locationId + '" class="link-dark text-decoration-none">' + employee.location.locationName + '</a></p>'));
+                    });
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr)
+                }
+            });
+        });
+    });
+
+</script>
