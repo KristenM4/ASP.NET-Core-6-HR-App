@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SeaWolf.HR.Models;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +8,12 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
+
 builder.Services.AddDbContext<SeaWolfHRDbContext>(options => {
     options.UseSqlServer(
         builder.Configuration["ConnectionStrings:SeaWolfHRDbContextConnection"]);
