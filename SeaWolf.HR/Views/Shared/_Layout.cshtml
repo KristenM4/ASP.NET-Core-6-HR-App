@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="~/SeaWolf.HR.styles.css" asp-append-version="true" />
     <script src="~/lib/jquery/jquery.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.js"></script>
+    @RenderSection("Scripts", required: false)
 </head>
 <body>
     <header>
@@ -35,6 +36,5 @@
         </div>
     </footer>
 
-    @RenderSection("Scripts", required: false)
 </body>
 </html>
