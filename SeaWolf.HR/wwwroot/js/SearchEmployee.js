@@ -1,6 +1,13 @@
 $(function () {
     function searchEmployee(searchQuery) {
-        $("caption").html("Search results");
+
+        if (searchQuery.length == 0) {
+            $("caption").html("All employees");
+        }
+        else {
+            $("caption").html("Search results");
+        }
+
         $("tbody").html("");
 
         $.ajax({
@@ -27,13 +34,17 @@ $(function () {
     $("#txtEmployeeName").on('keyup', function () {
         var searchQuery = $.trim($("#txtEmployeeName").val());
 
-        searchEmployee(searchQuery);
+        if (searchQuery.length > 1 || searchQuery.length == 0) {
+            searchEmployee(searchQuery);
+        }
 
     });
 
     $("#searchButton").on('click', function () {
         var searchQuery = $.trim($("#txtEmployeeName").val());
 
-        searchEmployee(searchQuery);
+        if (searchQuery.length > 1 || searchQuery.length == 0) {
+            searchEmployee(searchQuery);
+        }
     });
 });
