@@ -34,6 +34,8 @@ namespace SeaWolf.HRTests.Mocks
                 .Returns(employees.FirstOrDefault(e => e.EmployeeId == 99));
             // valid id
             mockEmployeeRepository.Setup(repo => repo.GetEmployeeById(1)).Returns(employees[0]);
+            mockEmployeeRepository.Setup(repo => repo.SearchEmployees("Salesperson"))
+                .Returns(employees.Where(e => e.Position == "Salesperson"));
             return mockEmployeeRepository;
         }
 
