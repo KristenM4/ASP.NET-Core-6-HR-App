@@ -11,7 +11,8 @@ namespace SeaWolf.HR.Models
             _context = seaWolfHRDbContext;
         }
 
-        public IEnumerable<Employee> AllEmployees => _context.Employees.Include(e=>e.Location);
+        public IEnumerable<Employee> AllEmployees => _context.Employees.
+            Include(e=>e.Location).OrderBy(e => e.LastName).ThenBy(e => e.FirstName);
 
         public Employee? GetEmployeeById(int employeeId)
         {
