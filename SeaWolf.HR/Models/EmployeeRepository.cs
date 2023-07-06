@@ -26,13 +26,21 @@ namespace SeaWolf.HR.Models
 
         public IEnumerable<Employee> SearchEmployees(string searchQuery)
         {
-            return _context.Employees.Include(e => e.Location).OrderBy(e => e.LastName)
-                .Where(e =>
-                e.FirstName.Contains(searchQuery) || e.LastName.Contains(searchQuery) ||
-                e.MiddleName.Contains(searchQuery) || e.Position.Contains(searchQuery) ||
-                e.Location.LocationName.Contains(searchQuery) || e.Phone.Contains(searchQuery) ||
-                e.Email.Contains(searchQuery)
-                );
+            if (string.IsNullOrWhiteSpace(searchQuery))
+            {
+                return _context.Employees.
+                    Include(e => e.Location).OrderBy(e => e.LastName).ThenBy(e => e.FirstName);
+            }
+            else
+            {
+                return _context.Employees.Include(e => e.Location).OrderBy(e => e.LastName)
+                    .Where(e =>
+                    e.FirstName.Contains(searchQuery) || e.LastName.Contains(searchQuery) ||
+                    e.MiddleName.Contains(searchQuery) || e.Position.Contains(searchQuery) ||
+                    e.Location.LocationName.Contains(searchQuery) || e.Phone.Contains(searchQuery) ||
+                    e.Email.Contains(searchQuery)
+                    );
+            }
         }
     }
 }
