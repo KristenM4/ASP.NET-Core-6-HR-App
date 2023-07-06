@@ -4,12 +4,18 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4 my-4 text-center">
-        All Employees
-    </h1>
 
-    <input id="txtEmployeeName" type="text" />
-    <button id="searchButton" class="btn btn-secondary">Search</button>
+    <div class="col-md-10 mx-auto d-flex mb-2">
+        <div class="w-50">
+            <h2 class="display-5 my-2">
+                <a class="link-dark text-decoration-none" asp-controller="App" asp-action="EmployeeList">All Employees</a>
+            </h2>
+        </div>
+        <div class="w-50 mt-4">
+            <input id="txtEmployeeName" type="text" placeholder="Search an employee" />
+            <button id="searchButton" class="btn btn-secondary">Search</button>
+        </div>
+    </div>
 
     <div class="col-md-10 col-xl-8 mx-auto">
         <table class="table table-hover">
@@ -35,7 +41,7 @@
                     <tr class="border-bottom">
                         <td class="col-4">
                             <a class="link-dark text-decoration-none" asp-controller="App" asp-action="EmployeeDetails" asp-route-id="@employee.EmployeeId">
-                                <p>@employee.FirstName.First(). @employee.LastName</p>
+                                <p>@employee.LastName, @employee.FirstName</p>
                             </a>
                         </td>
                         <td class="col-4">
@@ -78,12 +84,11 @@
         });
     }
 
-    $("#txtEmployeeName").on('keyup', function (e) {
-        if (e.which == 13) {
-            var searchQuery = $.trim($("#txtEmployeeName").val());
+    $("#txtEmployeeName").on('keyup', function () {
+        var searchQuery = $.trim($("#txtEmployeeName").val());
 
-            searchEmployee(searchQuery);
-        }
+        searchEmployee(searchQuery);
+        
     });
 
     $("#searchButton").on('click', function () {
