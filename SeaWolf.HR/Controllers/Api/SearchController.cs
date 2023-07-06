@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SeaWolf.HR.Models;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace SeaWolf.HR.Controllers.Api
 {
@@ -22,20 +23,44 @@ namespace SeaWolf.HR.Controllers.Api
         }
 
         [HttpPost]
-        public IActionResult SearchEmployees([FromBody] string searchQuery)
+        public IActionResult SearchEmployees([FromBody] string values)
         {
             IEnumerable<Employee> employees = new List<Employee>();
+            IEnumerable<Employee> sortedEmployees;
 
-            if (!string.IsNullOrEmpty(searchQuery))
+            string[] newValues = values.Split("$$");
+            string searchQuery = newValues[0];
+            string sorter = newValues[1];
+
+            employees = _employeeRepository.SearchEmployees(searchQuery);
+
+            switch(sorter)
             {
-                employees = _employeeRepository.SearchEmployees(searchQuery);
-            }
-            else
-            {
-                employees = _employeeRepository.AllEmployees;
+                case "NameDesc":
+                    sortedEmployees = employees.OrderByDescending(e => e.LastName).ThenBy(e => e.FirstName);
+                    break;
+                case "Position":
+                    sortedEmployees = employees.OrderBy(e => e.Position)
+                        .ThenBy(e => e.LastName).ThenBy(e => e.FirstName);
+                    break;
+                case "PositionDesc":
+                    sortedEmployees = employees.OrderByDescending(e => e.Position)
+                        .ThenBy(e => e.LastName).ThenBy(e => e.FirstName);
+                    break;
+                case "Location":
+                    sortedEmployees = employees.OrderBy(e => e.Location.LocationName)
+                        .ThenBy(e => e.LastName).ThenBy(e => e.FirstName);
+                    break;
+                case "LocationDesc":
+                    sortedEmployees = employees.OrderByDescending(e => e.Location.LocationName)
+                        .ThenBy(e => e.LastName).ThenBy(e => e.FirstName);
+                    break;
+                default:
+                    sortedEmployees = employees;
+                    break;
             }
 
-            return new JsonResult(employees);
+            return new JsonResult(sortedEmployees);
         }
     }
 }

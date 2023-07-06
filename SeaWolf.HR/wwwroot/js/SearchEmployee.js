@@ -1,5 +1,5 @@
 $(function () {
-    function searchEmployee(searchQuery) {
+    function searchEmployee(searchQuery = "", sorter = "LastName") {
 
         if (searchQuery.length == 0) {
             $("caption").html("All employees");
@@ -10,10 +10,12 @@ $(function () {
 
         $("tbody").html("");
 
+        let values = searchQuery + "$$" + sorter
+
         $.ajax({
             type: "POST",
             url: "/api/Search",
-            data: "\"" + searchQuery + "\"",
+            data: "\"" + values + "\"",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (employees) {
@@ -45,6 +47,51 @@ $(function () {
 
         if (searchQuery.length > 1 || searchQuery.length == 0) {
             searchEmployee(searchQuery);
+        }
+    });
+    let nameCounter = 0;
+    $("#nameSort").on('click', function () {
+        var searchQuery = $.trim($("#txtEmployeeName").val());
+
+        if (nameCounter == 0) {
+            nameCounter++;
+            searchEmployee(searchQuery);
+        }
+        else if (nameCounter >= 1) {
+            nameCounter--;
+            var sorter = "NameDesc";
+            searchEmployee(searchQuery, sorter);
+        }
+        
+    });
+    let positionCounter = 0;
+    $("#positionSort").on('click', function () {
+        var searchQuery = $.trim($("#txtEmployeeName").val());
+        var sorter = "Position";
+
+        if (positionCounter == 0) {
+            positionCounter++;
+            searchEmployee(searchQuery, sorter);
+        }
+        else if (positionCounter == 1) {
+            positionCounter--;
+            sorter = "PositionDesc";
+            searchEmployee(searchQuery, sorter);
+        }
+    });
+    let locationCounter = 0;
+    $("#locationSort").on('click', function () {
+        var searchQuery = $.trim($("#txtEmployeeName").val());
+        var sorter = "Location";
+
+        if (locationCounter == 0) {
+            locationCounter++;
+            searchEmployee(searchQuery, sorter);
+        }
+        else if (locationCounter == 1) {
+            locationCounter--;
+            sorter = "LocationDesc";
+            searchEmployee(searchQuery, sorter);
         }
     });
 });
