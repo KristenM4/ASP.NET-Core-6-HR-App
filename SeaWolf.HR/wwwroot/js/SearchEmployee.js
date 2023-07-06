@@ -13,7 +13,7 @@ $(function () {
                 $.each(employees, function (i, employee) {
                     $("tbody").append($("<tr>"));
                     appendElement = $("tbody tr").last();
-                    appendElement.append($("<td>").html('<p><a href="/app/employeedetails/' + employee.employeeId + '" class="link-dark text-decoration-none">' + employee.firstName + " " + employee.lastName + '</a></p>'));
+                    appendElement.append($("<td>").html('<p><a href="/app/employeedetails/' + employee.employeeId + '" class="link-dark text-decoration-none">' + employee.lastName + ", " + employee.firstName + '</a></p>'));
                     appendElement.append($("<td>").html('<p>' + employee.position + '</p>'));
                     appendElement.append($("<td>").html('<p><a href="/app/locationdetails/' + employee.location.locationId + '" class="link-dark text-decoration-none">' + employee.location.locationName + '</a></p>'));
                 });
