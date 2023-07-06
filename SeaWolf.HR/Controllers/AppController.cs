@@ -53,10 +53,5 @@ namespace SeaWolf.HR.Controllers
             ViewBag.Employees = _employeeRepository.GetEmployeesForLocation(id);
             return View(location);
         }
-
-        public IActionResult EmployeeSearch()
-        {
-            return View();
-        }
     }
 }
