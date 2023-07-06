@@ -30,6 +30,11 @@ namespace SeaWolf.HR.Controllers.Api
             {
                 employees = _employeeRepository.SearchEmployees(searchQuery);
             }
+            else
+            {
+                employees = _employeeRepository.AllEmployees;
+            }
+
             return new JsonResult(employees);
         }
     }
