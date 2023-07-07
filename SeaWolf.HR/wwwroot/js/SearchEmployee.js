@@ -49,47 +49,52 @@ $(function () {
             searchEmployee(searchQuery);
         }
     });
-    let nameCounter = 0;
+    let nameCounter = 1;
+    let positionCounter = 0;
+    let locationCounter = 0;
     $("#nameSort").on('click', function () {
         var searchQuery = $.trim($("#txtEmployeeName").val());
 
         if (nameCounter == 0) {
+            positionCounter = locationCounter = 0;
             nameCounter++;
             searchEmployee(searchQuery);
         }
         else if (nameCounter >= 1) {
-            nameCounter--;
+            positionCounter = locationCounter = nameCounter = 0;
             var sorter = "NameDesc";
             searchEmployee(searchQuery, sorter);
         }
         
     });
-    let positionCounter = 0;
+
     $("#positionSort").on('click', function () {
         var searchQuery = $.trim($("#txtEmployeeName").val());
         var sorter = "Position";
 
         if (positionCounter == 0) {
+            nameCounter = locationCounter = 0;
             positionCounter++;
             searchEmployee(searchQuery, sorter);
         }
         else if (positionCounter == 1) {
-            positionCounter--;
+            positionCounter = locationCounter = nameCounter = 0;
             sorter = "PositionDesc";
             searchEmployee(searchQuery, sorter);
         }
     });
-    let locationCounter = 0;
+
     $("#locationSort").on('click', function () {
         var searchQuery = $.trim($("#txtEmployeeName").val());
         var sorter = "Location";
 
         if (locationCounter == 0) {
+            nameCounter = positionCounter = 0;
             locationCounter++;
             searchEmployee(searchQuery, sorter);
         }
         else if (locationCounter == 1) {
-            locationCounter--;
+            positionCounter = locationCounter = nameCounter = 0;
             sorter = "LocationDesc";
             searchEmployee(searchQuery, sorter);
         }
