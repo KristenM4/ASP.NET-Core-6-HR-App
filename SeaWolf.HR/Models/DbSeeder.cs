@@ -10,7 +10,7 @@
 
             if(!context.Locations.Any())
             {
-                context.Add(
+                context.AddRange(
                     new Location()
                     {
                         LocationName = "Farrington Store",
@@ -19,6 +19,46 @@
                         City = "Waianae",
                         State = "Hawaii",
                         PostalCode = "96792",
+                        Country = "US"
+                    },
+                    new Location()
+                    {
+                        LocationName = "SeaWolf Warehouse",
+                        Phone = "8085555678",
+                        AddressLine1 = "72 Seashell Road",
+                        City = "Waipahu",
+                        State = "Hawaii",
+                        PostalCode = "96797",
+                        Country = "US"
+                    },
+                    new Location()
+                    {
+                        LocationName = "SeaWolf HQ",
+                        Phone = "1800555152",
+                        AddressLine1 = "4132 Mookaula St",
+                        City = "Honolulu",
+                        State = "Hawaii",
+                        PostalCode = "96817",
+                        Country = "US"
+                    },
+                    new Location()
+                    {
+                        LocationName = "Honolulu Store",
+                        Phone = "9025555678",
+                        AddressLine1 = "90-3 Kahala Ave",
+                        City = "Honolulu",
+                        State = "Hawaii",
+                        PostalCode = "96816",
+                        Country = "US"
+                    },
+                    new Location()
+                    {
+                        LocationName = "Haleiwa Store",
+                        Phone = "8085550099",
+                        AddressLine1 = "63-10 Kamehameha Hwy",
+                        City = "Haleiwa",
+                        State = "Hawaii",
+                        PostalCode = "96712",
                         Country = "US"
                     });
                 context.SaveChanges();
