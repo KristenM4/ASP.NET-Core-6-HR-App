@@ -8,50 +8,93 @@ namespace SeaWolf.HR.Controllers
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly ILocationRepository _locationRepository;
+        private readonly ILogger<AppController> _logger;
 
-        public AppController(IEmployeeRepository employeeRepository, ILocationRepository locationRepository)
+        public AppController(IEmployeeRepository employeeRepository, ILocationRepository locationRepository, ILogger<AppController> logger)
         {
             _employeeRepository = employeeRepository;
             _locationRepository = locationRepository;
+            _logger = logger;
         }
         public IActionResult Index()
         {
-            return View();
+            try
+            {
+                return View();
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to get App/Index: {ex}");
+                return BadRequest("Failed to get home page");
+            }
         }
 
         public IActionResult EmployeeList()
         {
-            EmployeeListViewModel employeeListViewModel = new EmployeeListViewModel
-                (_employeeRepository.AllEmployees);
-            return View(employeeListViewModel);
+            try
+            {
+                EmployeeListViewModel employeeListViewModel = new EmployeeListViewModel
+                    (_employeeRepository.AllEmployees);
+                return View(employeeListViewModel);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to get App/EmployeeList: {ex}");
+                return BadRequest("Failed to get employee list");
+            }
         }
 
         public IActionResult EmployeeDetails(int id)
         {
-            var employee = _employeeRepository.GetEmployeeById(id);
-            if(employee == null)
+            try
             {
-                return NotFound();
+                var employee = _employeeRepository.GetEmployeeById(id);
+                if (employee == null)
+                {
+                    return NotFound();
+                }
+                return View(employee);
             }
-            return View(employee);
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to get App/EmployeeDetails: {ex}");
+                return BadRequest("Failed to get employee details");
+            }
         }
 
         public IActionResult LocationList()
         {
-            LocationListViewModel locationListViewModel = new LocationListViewModel
+            try
+            {
+                LocationListViewModel locationListViewModel = new LocationListViewModel
                 (_locationRepository.AllLocations);
-            return View(locationListViewModel);
+                return View(locationListViewModel);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to get App/LocationList: {ex}");
+                return BadRequest("Failed to get location list");
+            }
         }
 
         public IActionResult LocationDetails(int id)
         {
-            var location = _locationRepository.GetLocationById(id);
-            if(location == null)
+            try
             {
-                return NotFound();
+                var location = _locationRepository.GetLocationById(id);
+                if (location == null)
+                {
+                    return NotFound();
+                }
+                ViewBag.Employees = _employeeRepository.GetEmployeesForLocation(id);
+                return View(location);
             }
-            ViewBag.Employees = _employeeRepository.GetEmployeesForLocation(id);
-            return View(location);
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to get App/LocationDetails: {ex}");
+                return BadRequest("Failed to get location details");
+            }
         }
     }
 }
