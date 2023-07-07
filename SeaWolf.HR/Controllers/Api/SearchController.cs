@@ -9,17 +9,27 @@ namespace SeaWolf.HR.Controllers.Api
     public class SearchController : ControllerBase
     {
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly ILogger<SearchController> _logger;
 
-        public SearchController(IEmployeeRepository employeeRepository)
+        public SearchController(IEmployeeRepository employeeRepository, ILogger<SearchController> logger)
         {
             _employeeRepository = employeeRepository;
+            _logger = logger;
         }
 
         [HttpGet]
         public IActionResult GetAllEmployees()
         {
-            var allEmployees = _employeeRepository.AllEmployees;
-            return Ok(allEmployees);
+            try
+            {
+                var allEmployees = _employeeRepository.AllEmployees;
+                return Ok(allEmployees);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to get Search/GetAllEmployees: {ex}");
+                return BadRequest("Failed to get all employees from Search api");
+            }
         }
 
         [HttpPost]
@@ -32,35 +42,43 @@ namespace SeaWolf.HR.Controllers.Api
             string searchQuery = newValues[0];
             string sorter = newValues[1];
 
-            employees = _employeeRepository.SearchEmployees(searchQuery);
-
-            switch(sorter)
+            try
             {
-                case "NameDesc":
-                    sortedEmployees = employees.OrderByDescending(e => e.LastName).ThenBy(e => e.FirstName);
-                    break;
-                case "Position":
-                    sortedEmployees = employees.OrderBy(e => e.Position)
-                        .ThenBy(e => e.LastName).ThenBy(e => e.FirstName);
-                    break;
-                case "PositionDesc":
-                    sortedEmployees = employees.OrderByDescending(e => e.Position)
-                        .ThenBy(e => e.LastName).ThenBy(e => e.FirstName);
-                    break;
-                case "Location":
-                    sortedEmployees = employees.OrderBy(e => e.Location.LocationName)
-                        .ThenBy(e => e.LastName).ThenBy(e => e.FirstName);
-                    break;
-                case "LocationDesc":
-                    sortedEmployees = employees.OrderByDescending(e => e.Location.LocationName)
-                        .ThenBy(e => e.LastName).ThenBy(e => e.FirstName);
-                    break;
-                default:
-                    sortedEmployees = employees;
-                    break;
-            }
+                employees = _employeeRepository.SearchEmployees(searchQuery);
 
-            return new JsonResult(sortedEmployees);
+                switch (sorter)
+                {
+                    case "NameDesc":
+                        sortedEmployees = employees.OrderByDescending(e => e.LastName).ThenBy(e => e.FirstName);
+                        break;
+                    case "Position":
+                        sortedEmployees = employees.OrderBy(e => e.Position)
+                            .ThenBy(e => e.LastName).ThenBy(e => e.FirstName);
+                        break;
+                    case "PositionDesc":
+                        sortedEmployees = employees.OrderByDescending(e => e.Position)
+                            .ThenBy(e => e.LastName).ThenBy(e => e.FirstName);
+                        break;
+                    case "Location":
+                        sortedEmployees = employees.OrderBy(e => e.Location.LocationName)
+                            .ThenBy(e => e.LastName).ThenBy(e => e.FirstName);
+                        break;
+                    case "LocationDesc":
+                        sortedEmployees = employees.OrderByDescending(e => e.Location.LocationName)
+                            .ThenBy(e => e.LastName).ThenBy(e => e.FirstName);
+                        break;
+                    default:
+                        sortedEmployees = employees;
+                        break;
+                }
+
+                return new JsonResult(sortedEmployees);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to get Search/SearchEmployees: {ex}");
+                return BadRequest("Failed to get employee search from Search api");
+            }
         }
     }
 }
