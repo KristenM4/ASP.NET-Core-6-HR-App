@@ -3,12 +3,13 @@ using SeaWolf.HR.Models;
 using System.Text.Json.Serialization;
 using Serilog;
 using Serilog.Events;
+using System;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
     .Enrich.FromLogContext()
     .Enrich.WithMachineName()
-    .WriteTo.Seq(serverUrl: "http://localhost:8888/")
+    .WriteTo.Seq(serverUrl: "http://seq:5341")
     .WriteTo.Console()
     .CreateLogger();
 
@@ -50,6 +51,18 @@ try
     app.MapControllerRoute(
         name: "default",
         pattern: "{controller=App}/{action=Index}/{id?}");
+
+    using (var serviceScope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope())
+    {
+        var db = serviceScope.ServiceProvider.GetRequiredService<SeaWolfHRDbContext>().Database;
+        while (!db.CanConnect())
+        {
+            Thread.Sleep(1000);
+        }
+        serviceScope.ServiceProvider.GetRequiredService<SeaWolfHRDbContext>().Database.Migrate();
+
+    }
+
 
     DbSeeder.Seed(app);
 
