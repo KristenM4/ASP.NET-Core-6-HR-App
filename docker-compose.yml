@@ -1,0 +1,34 @@
+version: '3.4'
+
+services:
+  seawolf.hr:
+    image: ${DOCKER_REGISTRY-}seawolfhr
+    build:
+      context: .
+      dockerfile: SeaWolf.HR/Dockerfile
+    ports:
+      - "8080:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - seq
+      - sql
+  
+  seq:
+    image: datalust/seq
+    ports:
+      - "8888:80"
+      - "5341:5341"
+    environment:
+      - ACCEPT_EULA=Y
+
+  sql:
+    build:
+      context: .
+      dockerfile: sql/sql.Dockerfile
+    restart: always
+    ports:
+      - "1440:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Testpass123!
