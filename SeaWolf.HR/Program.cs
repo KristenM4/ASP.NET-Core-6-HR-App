@@ -2,8 +2,13 @@ using Microsoft.EntityFrameworkCore;
 using SeaWolf.HR.Models;
 using System.Text.Json.Serialization;
 using Serilog;
+using Serilog.Events;
 
 Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
+    .Enrich.FromLogContext()
+    .Enrich.WithMachineName()
+    .WriteTo.Seq(serverUrl: "http://localhost:8888/")
     .WriteTo.Console()
     .CreateLogger();
 
@@ -26,7 +31,7 @@ try
             builder.Configuration["ConnectionStrings:SeaWolfHRDbContextConnection"]);
     });
 
-    builder.Host.UseSerilog(); // <-- Add this line
+    builder.Host.UseSerilog();
 
     var app = builder.Build();
     if (!app.Environment.IsDevelopment())
