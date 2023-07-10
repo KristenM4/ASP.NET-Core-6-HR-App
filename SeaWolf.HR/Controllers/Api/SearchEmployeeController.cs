@@ -1,17 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SeaWolf.HR.Models;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace SeaWolf.HR.Controllers.Api
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class SearchController : ControllerBase
+    public class SearchEmployeeController : ControllerBase
     {
         private readonly IEmployeeRepository _employeeRepository;
-        private readonly ILogger<SearchController> _logger;
+        private readonly ILogger<SearchEmployeeController> _logger;
 
-        public SearchController(IEmployeeRepository employeeRepository, ILogger<SearchController> logger)
+        public SearchEmployeeController(IEmployeeRepository employeeRepository, ILogger<SearchEmployeeController> logger)
         {
             _employeeRepository = employeeRepository;
             _logger = logger;

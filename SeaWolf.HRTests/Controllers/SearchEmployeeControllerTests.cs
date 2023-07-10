@@ -7,15 +7,15 @@ using SeaWolf.HRTests.Mocks;
 
 namespace SeaWolf.HR.Controllers
 {
-    public class SearchControllerTests
+    public class SearchEmployeeControllerTests
     {
         private readonly Mock<IEmployeeRepository> _mockEmployeeRepository;
-        private readonly SearchController _controller;
+        private readonly SearchEmployeeController _controller;
 
-        public SearchControllerTests()
+        public SearchEmployeeControllerTests()
         {
             _mockEmployeeRepository = RepositoryMocks.GetEmployeeRepository();
-            _controller = new SearchController(_mockEmployeeRepository.Object, Mock.Of<ILogger<SearchController>>());
+            _controller = new SearchEmployeeController(_mockEmployeeRepository.Object, Mock.Of<ILogger<SearchEmployeeController>>());
         }
 
         [Fact]
