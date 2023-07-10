@@ -72,7 +72,8 @@ namespace SeaWolf.HRTests.Mocks
                 .Returns(locations.FirstOrDefault(e => e.LocationId == 99));
             // valid id
             mockLocationRepository.Setup(repo => repo.GetLocationById(1)).Returns(locations[0]);
-
+            mockLocationRepository.Setup(repo => repo.SearchLocations("Waianae"))
+                .Returns(locations.Where(e => e.City == "Waianae"));
             return mockLocationRepository;
         }
     }
