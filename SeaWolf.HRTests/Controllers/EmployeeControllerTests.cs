@@ -17,5 +17,27 @@ namespace SeaWolf.HR.Controllers
             _mockEmployeeRepository = RepositoryMocks.GetEmployeeRepository();
             _controller = new EmployeeController(_mockEmployeeRepository.Object, Mock.Of<ILogger<EmployeeController>>());
         }
+
+        [Fact]
+        public void GetAllEmployees_Returns_All_Employees()
+        {
+            var actionResult = _controller.GetAllEmployees();
+            var result = actionResult as OkObjectResult;
+            var value = result.Value as IEnumerable<Employee>;
+
+            Assert.IsType<OkObjectResult>(actionResult);
+            Assert.Equal(5, value.Count());
+        }
+
+        [Fact]
+        public void GetEmployeeDetails_Returns_Employee()
+        {
+            var actionResult = _controller.GetEmployeeDetails(1);
+            var result = actionResult as OkObjectResult;
+            var value = result.Value as Employee;
+
+            Assert.IsType<OkObjectResult>(actionResult);
+            Assert.Equal("Bob", value.FirstName);
+        }
     }
 }
