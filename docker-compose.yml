@@ -16,6 +16,7 @@ services:
   
   seq:
     image: datalust/seq
+    container_name: SeaWolf.HR-Seq
     ports:
       - "8888:80"
       - "5341:5341"
@@ -23,6 +24,7 @@ services:
       - ACCEPT_EULA=Y
 
   sql:
+    container_name: SeaWolf.HR-MSSQL
     build:
       context: .
       dockerfile: sql/sql.Dockerfile
