@@ -72,7 +72,7 @@ namespace SeaWolf.HR.Controllers.Api
                         break;
                 }
 
-                return new JsonResult(sortedEmployees);
+                return Ok(sortedEmployees);
             }
             catch (Exception ex)
             {
