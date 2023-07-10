@@ -17,20 +17,6 @@ namespace SeaWolf.HR.Controllers.Api
             _logger = logger;
         }
 
-        [HttpGet]
-        public IActionResult GetAllEmployees()
-        {
-            try
-            {
-                var allEmployees = _employeeRepository.AllEmployees;
-                return Ok(allEmployees);
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Failed to get Search/GetAllEmployees: {ex}");
-                return BadRequest("Failed to get all employees from Search api");
-            }
-        }
 
         [HttpPost]
         public IActionResult SearchEmployees([FromBody] string values)
