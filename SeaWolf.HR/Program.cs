@@ -4,6 +4,7 @@ using System.Text.Json.Serialization;
 using Serilog;
 using Serilog.Events;
 using System;
+using Microsoft.AspNetCore.Identity;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
@@ -18,6 +19,12 @@ try
     Log.Information("Starting web application");
 
     var builder = WebApplication.CreateBuilder(args);
+    builder.Services.AddIdentity<HRUser, IdentityRole>(cfg =>
+    {
+        cfg.User.RequireUniqueEmail = true;
+    })
+        .AddEntityFrameworkStores<SeaWolfHRDbContext>();
+
     builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
     builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 
@@ -46,6 +53,7 @@ try
 
     app.UseRouting();
 
+    app.UseAuthentication();
     app.UseAuthorization();
 
     app.MapControllerRoute(
