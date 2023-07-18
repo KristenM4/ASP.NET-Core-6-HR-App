@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SeaWolf.HR.Models;
 
@@ -11,9 +12,11 @@ using SeaWolf.HR.Models;
 namespace SeaWolf.HR.Migrations
 {
     [DbContext(typeof(SeaWolfHRDbContext))]
-    partial class SeaWolfHRDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230718045215_AddIdentity")]
+    partial class AddIdentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace SeaWolf.HR.Models
 {
-    public class SeaWolfHRDbContext : DbContext
+    public class SeaWolfHRDbContext : IdentityDbContext<HRUser>
     {
         public SeaWolfHRDbContext(DbContextOptions<SeaWolfHRDbContext> 
             options) : base(options)
