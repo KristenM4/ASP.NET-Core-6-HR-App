@@ -1,12 +1,35 @@
-﻿namespace SeaWolf.HR.Models
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace SeaWolf.HR.Models
 {
     public class DbSeeder
     {
-        public static void Seed(IApplicationBuilder applicationBuilder)
+        public static async Task SeedAsync(IApplicationBuilder applicationBuilder)
         {
             SeaWolfHRDbContext context =
                 applicationBuilder.ApplicationServices.CreateScope
                 ().ServiceProvider.GetRequiredService<SeaWolfHRDbContext>();
+
+            UserManager<HRUser> userManager =
+                applicationBuilder.ApplicationServices.CreateScope
+                ().ServiceProvider.GetRequiredService<UserManager<HRUser>>();
+
+            HRUser user = await userManager.FindByEmailAsync("HR@example.com");
+            if (user == null)
+            {
+                user = new HRUser()
+                {
+                    FirstName = "HR",
+                    LastName = "Department",
+                    Email = "HR@example.com",
+                    UserName = "HR@example.com"
+                };
+                var result = await userManager.CreateAsync(user, "Testp@ss123");
+                if (result != IdentityResult.Success)
+                {
+                    throw new InvalidOperationException("User creation unsuccessful in seeder");
+                }
+            }
 
             if(!context.Locations.Any())
             {

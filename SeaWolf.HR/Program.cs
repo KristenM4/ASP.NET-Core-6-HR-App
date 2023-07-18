@@ -64,7 +64,7 @@ try
     }
 
 
-    DbSeeder.Seed(app);
+    DbSeeder.SeedAsync(app).Wait();
 
     app.Run();
 }
