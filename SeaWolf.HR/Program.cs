@@ -25,6 +25,10 @@ try
     })
         .AddEntityFrameworkStores<SeaWolfHRDbContext>();
 
+    builder.Services.AddAuthentication()
+        .AddCookie()
+        .AddJwtBearer();
+
     builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
     builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 
