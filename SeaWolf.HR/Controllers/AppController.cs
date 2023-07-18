@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SeaWolf.HR.Models;
 using SeaWolf.HR.ViewModels;
 
@@ -45,6 +46,7 @@ namespace SeaWolf.HR.Controllers
             }
         }
 
+        [Authorize]
         public IActionResult EmployeeDetails(int id)
         {
             try
