@@ -42,7 +42,10 @@ try
     builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
     builder.Services.AddScoped<ILocationRepository, LocationRepository>();
 
-    builder.Services.AddControllersWithViews()
+    builder.Services.AddControllersWithViews(options =>
+        {
+            options.ReturnHttpNotAcceptable = true;
+        }).AddXmlDataContractSerializerFormatters()
         .AddJsonOptions(options =>
         {
             options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
