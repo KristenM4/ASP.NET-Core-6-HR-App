@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SeaWolf.HR.Models;
 
 namespace SeaWolf.HR.Controllers.Api
 {
     [Route("api/[controller]")]
+    [Authorize(AuthenticationSchemes=JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     public class EmployeeController : ControllerBase
     {
