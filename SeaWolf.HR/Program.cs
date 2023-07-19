@@ -51,6 +51,8 @@ try
             options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
         });
 
+    builder.Services.AddSwaggerGen();
+
     builder.Services.AddDbContext<SeaWolfHRDbContext>(options => {
         options.UseSqlServer(
             builder.Configuration["ConnectionStrings:SeaWolfHRDbContextConnection"]);
@@ -59,8 +61,10 @@ try
     builder.Host.UseSerilog();
 
     var app = builder.Build();
-    if (!app.Environment.IsDevelopment())
+    if (app.Environment.IsDevelopment())
     {
+        app.UseSwagger();
+        app.UseSwaggerUI();
         app.UseExceptionHandler("/Home/Error");
         app.UseHsts();
     }
