@@ -16,6 +16,7 @@ namespace SeaWolf.HR.ViewModels
 
         [Required]
         [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true)]
         public DateTime DateOfBirth { get; set; }
 
         [Required]
