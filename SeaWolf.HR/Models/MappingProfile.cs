@@ -7,7 +7,8 @@ namespace SeaWolf.HR.Models
     {
         public MappingProfile()
         {
-            CreateMap<Employee, AddEmployeeViewModel>();
+            CreateMap<Employee, AddEmployeeViewModel>()
+                .ReverseMap();
         }
     }
 }
