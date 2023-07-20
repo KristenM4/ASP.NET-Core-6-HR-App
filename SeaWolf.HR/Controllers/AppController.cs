@@ -69,6 +69,7 @@ namespace SeaWolf.HR.Controllers
             }
         }
 
+        [Authorize]
         public IActionResult AddEmployee()
         {
             try
@@ -85,6 +86,7 @@ namespace SeaWolf.HR.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult AddEmployee(AddEmployeeViewModel model)
         {
