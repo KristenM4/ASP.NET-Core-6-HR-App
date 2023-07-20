@@ -22,6 +22,11 @@
                 Position="Cleaner"}
             };
 
+        public void AddEmployee(Employee employee)
+        {
+            AllEmployees.ToList().Add(employee);
+        }
+
         public Employee? GetEmployeeById(int employeeId)
         {
             return AllEmployees.FirstOrDefault(e => e.EmployeeId == employeeId);
@@ -30,6 +35,11 @@
         public IEnumerable<Employee> GetEmployeesForLocation(int locationId)
         {
             return AllEmployees.Where(e => e.Location.LocationId == locationId);
+        }
+
+        public bool Save()
+        {
+            return true;
         }
 
         public IEnumerable<Employee> SearchEmployees(string searchQuery)
