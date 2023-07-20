@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SeaWolf.HR.Models;
 using SeaWolf.HR.ViewModels;
@@ -10,12 +12,17 @@ namespace SeaWolf.HR.Controllers
         private readonly IEmployeeRepository _employeeRepository;
         private readonly ILocationRepository _locationRepository;
         private readonly ILogger<AppController> _logger;
+        private readonly IMapper _mapper;
 
-        public AppController(IEmployeeRepository employeeRepository, ILocationRepository locationRepository, ILogger<AppController> logger)
+        public AppController(IEmployeeRepository employeeRepository, 
+            ILocationRepository locationRepository, 
+            ILogger<AppController> logger,
+            IMapper mapper)
         {
             _employeeRepository = employeeRepository;
             _locationRepository = locationRepository;
             _logger = logger;
+            _mapper = mapper;
         }
         public IActionResult Index()
         {
@@ -79,6 +86,41 @@ namespace SeaWolf.HR.Controllers
                 _logger.LogError($"Failed to get App/AddEmployee: {ex}");
                 return BadRequest("Failed to get add employee page");
             }
+        }
+
+        [HttpPost]
+        public IActionResult AddEmployee(AddEmployeeViewModel model)
+        {
+            var allLocations = _locationRepository.AllLocations;
+            ViewBag.AllLocations = allLocations.ToList();
+
+            if (ModelState.IsValid)
+            {
+                var modelLocation = _locationRepository.GetLocationByName(model.Location);
+
+                var newEmployee = new Employee()
+                {
+                    FirstName = model.FirstName,
+                    LastName = model.LastName,
+                    MiddleName = model.MiddleName,
+                    DateOfBirth = model.DateOfBirth,
+                    Email = model.Email,
+                    Phone = model.Phone,
+                    Position = model.Position,
+                    Location = modelLocation,
+                };
+
+                _employeeRepository.AddEmployee(newEmployee);
+
+                if (_employeeRepository.Save())
+                {
+                    return RedirectToAction("EmployeeDetails", "App", newEmployee.EmployeeId);
+                }
+            }
+
+            ModelState.AddModelError("", "Failed to add employee");
+
+            return View();
         }
 
         public IActionResult LocationList()
