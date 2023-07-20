@@ -6,5 +6,7 @@
         Employee? GetEmployeeById(int employeeId);
         IEnumerable<Employee> GetEmployeesForLocation(int locationId);
         IEnumerable<Employee> SearchEmployees(string searchQuery);
+        void AddEmployee(Employee employee);
+        bool Save();
     }
 }
