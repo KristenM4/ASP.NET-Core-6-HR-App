@@ -4,6 +4,7 @@
     {
         IEnumerable<Location> AllLocations { get; }
         Location? GetLocationById(int locationId);
+        Location? GetLocationByName(string name);
         IEnumerable<Location> SearchLocations(string searchQuery);
     }
 }

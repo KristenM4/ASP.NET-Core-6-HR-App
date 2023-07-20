@@ -17,6 +17,11 @@ namespace SeaWolf.HR.Models
             return _context.Locations.FirstOrDefault(l => l.LocationId == locationId);
         }
 
+        public Location? GetLocationByName(string name)
+        {
+            return _context.Locations.FirstOrDefault(l => l.LocationName == name);
+        }
+
         public IEnumerable<Location> SearchLocations(string searchQuery)
         {
             if (string.IsNullOrWhiteSpace(searchQuery))
