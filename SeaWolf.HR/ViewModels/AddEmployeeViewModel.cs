@@ -31,6 +31,6 @@ namespace SeaWolf.HR.ViewModels
         public string Position { get; set; }
 
         [Required]
-        public Location? Location { get; set; }
+        public string Location { get; set; }
     }
 }
