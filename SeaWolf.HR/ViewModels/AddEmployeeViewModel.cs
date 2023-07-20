@@ -5,6 +5,7 @@ namespace SeaWolf.HR.ViewModels
 {
     public class AddEmployeeViewModel
     {
+        public int EmployeeId { get; set; }
 
         [Required]
         public string FirstName { get; set; }
