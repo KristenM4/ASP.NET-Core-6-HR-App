@@ -113,7 +113,7 @@ namespace SeaWolf.HR.Controllers
 
                 if (_employeeRepository.Save())
                 {
-                    return RedirectToAction("EmployeeDetails", "App", newEmployee.EmployeeId);
+                    return RedirectToAction("EmployeeDetails", "App", new { id = newEmployee.EmployeeId });
                 }
             }
 
