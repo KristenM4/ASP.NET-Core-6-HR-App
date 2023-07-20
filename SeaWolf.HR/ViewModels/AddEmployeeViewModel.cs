@@ -7,30 +7,30 @@ namespace SeaWolf.HR.ViewModels
     {
         public int EmployeeId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "First name is required")]
         public string FirstName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Last name is required")]
         public string LastName { get; set; }
 
         public string? MiddleName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Date of birth is required")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true)]
         public DateTime DateOfBirth { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Email address is required")]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Phone number is required")]
         public string Phone { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Position is required")]
         public string Position { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Location is required")]
         public string Location { get; set; }
     }
 }
