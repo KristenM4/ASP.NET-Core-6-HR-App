@@ -65,6 +65,20 @@ namespace SeaWolf.HR.Controllers
             }
         }
 
+        public IActionResult AddEmployee()
+        {
+            try
+            {
+                return View();
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to get App/AddEmployee: {ex}");
+                return BadRequest("Failed to get add employee page");
+            }
+        }
+
         public IActionResult LocationList()
         {
             try
