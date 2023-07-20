@@ -12,17 +12,14 @@ namespace SeaWolf.HR.Controllers
         private readonly IEmployeeRepository _employeeRepository;
         private readonly ILocationRepository _locationRepository;
         private readonly ILogger<AppController> _logger;
-        private readonly IMapper _mapper;
 
         public AppController(IEmployeeRepository employeeRepository, 
             ILocationRepository locationRepository, 
-            ILogger<AppController> logger,
-            IMapper mapper)
+            ILogger<AppController> logger)
         {
             _employeeRepository = employeeRepository;
             _locationRepository = locationRepository;
             _logger = logger;
-            _mapper = mapper;
         }
         public IActionResult Index()
         {
