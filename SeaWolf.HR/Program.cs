@@ -65,7 +65,7 @@ try
     {
         app.UseSwagger();
         app.UseSwaggerUI();
-        app.UseExceptionHandler("/Home/Error");
+        app.UseDeveloperExceptionPage();
         app.UseHsts();
     }
 

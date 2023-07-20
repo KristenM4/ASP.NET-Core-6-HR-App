@@ -69,6 +69,8 @@ namespace SeaWolf.HR.Controllers
         {
             try
             {
+                var allLocations = _locationRepository.AllLocations;
+                ViewBag.AllLocations = allLocations.ToList();
                 return View();
 
             }
