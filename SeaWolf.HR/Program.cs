@@ -7,6 +7,7 @@ using System;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using System.Reflection;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
@@ -52,6 +53,7 @@ try
         });
 
     builder.Services.AddSwaggerGen();
+    builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
     builder.Services.AddDbContext<SeaWolfHRDbContext>(options => {
         options.UseSqlServer(
