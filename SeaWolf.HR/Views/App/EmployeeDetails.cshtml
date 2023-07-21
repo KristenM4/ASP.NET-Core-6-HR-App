@@ -3,10 +3,13 @@
     ViewBag.Title = "Employee Details";
 }
 
-<div>
+<div class="container col-md-8 mx-auto">
     <h1 class="display-4 my-4 text-center">Employee Details</h1>
+    <a asp-action="DeleteEmployee" asp-controller="App" asp-route-id="@Model.EmployeeId" class="text-danger mb-2 text-decoration-none">
+        Delete Employee
+    </a>
 
-    <div class="container col-md-8 mx-auto border border-secondary rounded pt-2">
+    <div class="border border-secondary rounded pt-2">
         <div class="row">
 
             <div class="col-4">
