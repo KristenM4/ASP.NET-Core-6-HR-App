@@ -17,6 +17,16 @@ namespace SeaWolf.HR.Models
             _context.Locations.Add(location);
         }
 
+        public void DeleteLocation(int locationId)
+        {
+            var location = GetLocationById(locationId);
+
+            if (location != null)
+            {
+                _context.Locations.Remove(location);
+            }
+        }
+
         public Location? GetLocationById(int locationId)
         {
             return _context.Locations.FirstOrDefault(l => l.LocationId == locationId);

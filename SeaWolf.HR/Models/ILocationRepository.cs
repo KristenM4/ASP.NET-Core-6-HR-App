@@ -7,6 +7,7 @@
         Location? GetLocationByName(string name);
         IEnumerable<Location> SearchLocations(string searchQuery);
         void AddLocation(Location location);
+        void DeleteLocation(int locationId);
         bool Save();
     }
 }
