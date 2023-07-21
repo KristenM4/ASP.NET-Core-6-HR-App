@@ -13,8 +13,8 @@ namespace SeaWolf.HR.Controllers
         private readonly ILocationRepository _locationRepository;
         private readonly ILogger<AppController> _logger;
 
-        public AppController(IEmployeeRepository employeeRepository, 
-            ILocationRepository locationRepository, 
+        public AppController(IEmployeeRepository employeeRepository,
+            ILocationRepository locationRepository,
             ILogger<AppController> logger)
         {
             _employeeRepository = employeeRepository;
@@ -167,6 +167,53 @@ namespace SeaWolf.HR.Controllers
                 _logger.LogError($"Failed to get App/LocationDetails: {ex}");
                 return BadRequest("Failed to get location details");
             }
+        }
+
+        public IActionResult AddLocation()
+        {
+            try
+            {
+                return View();
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to get App/AddLocation: {ex}");
+                return BadRequest("Failed to get add location page");
+            }
+        }
+
+        [HttpPost]
+        public IActionResult AddLocation(AddLocationViewModel model)
+        {
+
+            if (ModelState.IsValid)
+            {
+                if (model.AddressLine2 == null) model.AddressLine2 = string.Empty;
+
+                var newLocation = new Location()
+                {
+                    LocationName = model.LocationName,
+                    Phone = model.Phone,
+                    AddressLine1 = model.AddressLine1,
+                    AddressLine2 = model.AddressLine2,
+                    City = model.City,
+                    State = model.State,
+                    PostalCode = model.PostalCode,
+                    Country = model.Country
+                };
+
+                _locationRepository.AddLocation(newLocation);
+
+                if (_locationRepository.Save())
+                {
+                    return RedirectToAction("LocationDetails", "App", new { id = newLocation.LocationId });
+                }
+            }
+
+            ModelState.AddModelError("", "Failed to add location");
+
+            return View();
         }
     }
 }
