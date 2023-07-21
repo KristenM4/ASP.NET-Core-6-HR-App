@@ -215,5 +215,18 @@ namespace SeaWolf.HR.Controllers
 
             return View();
         }
+
+        [HttpGet]
+        public IActionResult DeleteLocation(int id)
+        {
+            _locationRepository.DeleteLocation(id);
+
+            if (_locationRepository.Save())
+            {
+                return RedirectToAction("LocationList", "App");
+            }
+
+            return BadRequest();
+        }
     }
 }
