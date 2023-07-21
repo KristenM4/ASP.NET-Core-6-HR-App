@@ -12,6 +12,11 @@ namespace SeaWolf.HR.Models
         }
         public IEnumerable<Location> AllLocations => _context.Locations.OrderBy(l => l.LocationName);
 
+        public void AddLocation(Location location)
+        {
+            _context.Locations.Add(location);
+        }
+
         public Location? GetLocationById(int locationId)
         {
             return _context.Locations.FirstOrDefault(l => l.LocationId == locationId);
@@ -20,6 +25,11 @@ namespace SeaWolf.HR.Models
         public Location? GetLocationByName(string name)
         {
             return _context.Locations.FirstOrDefault(l => l.LocationName == name);
+        }
+
+        public bool Save()
+        {
+            return _context.SaveChanges() > 0;
         }
 
         public IEnumerable<Location> SearchLocations(string searchQuery)
