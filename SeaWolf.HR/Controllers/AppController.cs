@@ -122,6 +122,19 @@ namespace SeaWolf.HR.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult DeleteEmployee(int id)
+        {
+            _employeeRepository.DeleteEmployee(id);
+
+            if (_employeeRepository.Save())
+            {
+                return RedirectToAction("EmployeeList", "App");
+            }
+
+            return BadRequest();
+        }
+
         public IActionResult LocationList()
         {
             try
