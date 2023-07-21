@@ -1,9 +1,20 @@
 ﻿@model Location
 
-<div>
+<div class="container col-md-8 mx-auto">
     <h1 class="display-4 my-4 text-center">Location Details</h1>
 
-    <div class="container col-md-8 mx-auto border border-secondary rounded pt-2">
+    @if (ViewBag.Employees.Count == 0)
+    {
+        <a asp-action="DeleteLocation" asp-controller="App" asp-route-id="@Model.LocationId" class="text-danger mb-2 text-decoration-none">
+            Delete Location
+        </a>
+    }
+    else
+    {
+        <p>Locations with employees may not be deleted</p>
+    }
+
+    <div class="border border-secondary rounded pt-2">
         <div class="row">
 
             <div class="col-4">
