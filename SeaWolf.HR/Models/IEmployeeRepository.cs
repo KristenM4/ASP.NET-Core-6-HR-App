@@ -7,6 +7,7 @@
         IEnumerable<Employee> GetEmployeesForLocation(int locationId);
         IEnumerable<Employee> SearchEmployees(string searchQuery);
         void AddEmployee(Employee employee);
+        void DeleteEmployee(int employeeId);
         bool Save();
     }
 }

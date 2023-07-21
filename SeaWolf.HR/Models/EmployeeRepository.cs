@@ -19,6 +19,16 @@ namespace SeaWolf.HR.Models
             _context.Employees.Add(employee);
         }
 
+        public void DeleteEmployee(int employeeId)
+        {
+            var employee = GetEmployeeById(employeeId);
+
+            if (employee != null)
+            {
+                _context.Employees.Remove(employee);
+            }
+        }
+
         public Employee? GetEmployeeById(int employeeId)
         {
             return _context.Employees.Include(e => e.Location).FirstOrDefault(e => e.EmployeeId == employeeId);
