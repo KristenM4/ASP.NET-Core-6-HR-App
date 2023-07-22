@@ -25,3 +25,8 @@ body {
 .validation-summary-errors ul {
     list-style: none;
 }
+
+#delete-toggle {
+    cursor: pointer;
+    text-decoration: underline;
+}
