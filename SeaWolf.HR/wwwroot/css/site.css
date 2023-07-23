@@ -26,7 +26,7 @@ body {
     list-style: none;
 }
 
-#delete-toggle {
+#delete-toggle, #edit-toggle {
     cursor: pointer;
     text-decoration: underline;
 }
