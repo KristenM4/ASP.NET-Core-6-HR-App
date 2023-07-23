@@ -123,6 +123,32 @@ namespace SeaWolf.HR.Controllers
         }
 
         [HttpGet]
+        public IActionResult EditEmployee(int id)
+        {
+            try
+            {
+                var employee = _employeeRepository.GetEmployeeById(id);
+                if (employee == null)
+                {
+                    return NotFound();
+                }
+                ViewBag.Employee = employee;
+
+                var allLocations = _locationRepository.AllLocations.ToList();
+                allLocations.Remove(employee.Location);
+                ViewBag.AllLocations = allLocations;
+
+                return View();
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to get App/EditEmployee: {ex}");
+                return BadRequest("Failed to get edit employee page");
+            }
+        }
+
+        [HttpGet]
         public IActionResult DeleteEmployee(int id)
         {
             _employeeRepository.DeleteEmployee(id);
