@@ -1,0 +1,67 @@
+﻿@model AddEmployeeViewModel
+@{
+    ViewBag.Title = "Edit Employee Details";
+}
+@section Scripts {
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+<div>
+    <h5 class="display-5 text-center">Edit Employee Details</h5>
+
+    <div class="col-md-6 offset-3">
+        <form method="POST">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FirstName">First Name</label>
+                <input asp-for="FirstName" class="form-control" type="text" value="@ViewBag.Employee.FirstName" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName">Last Name</label>
+                <input asp-for="LastName" class="form-control" type="text" value="@ViewBag.Employee.LastName" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MiddleName">Middle Name (optional)</label>
+                <input asp-for="MiddleName" class="form-control" type="text" value="@ViewBag.Employee.MiddleName" />
+                <span asp-validation-for="MiddleName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DateOfBirth">Date of Birth</label>
+                <input asp-for="DateOfBirth" class="form-control" type="date" value='@ViewBag.Employee.DateOfBirth.ToString("yyyy-MM-dd")' />
+                <span asp-validation-for="DateOfBirth" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email">Email Address</label>
+                <input asp-for="Email" class="form-control" type="email" value="@ViewBag.Employee.Email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone">Phone Number</label>
+                <input asp-for="Phone" class="form-control" type="text" value="@ViewBag.Employee.Phone" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Position">Position</label>
+                <input asp-for="Position" class="form-control" type="text" value="@ViewBag.Employee.Position" />
+                <span asp-validation-for="Position" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Location">Location</label>
+                <select asp-for="Location" class="form-control">
+                    <option value="@ViewBag.Employee.Location.LocationName">@ViewBag.Employee.Location.LocationName</option>
+                    @foreach (var location in ViewBag.AllLocations)
+                    {
+                        <option value="@location.LocationName">@location.LocationName</option>
+                    }
+                </select>
+                <span asp-validation-for="Location" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
