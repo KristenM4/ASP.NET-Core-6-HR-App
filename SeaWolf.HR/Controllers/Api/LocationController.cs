@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SeaWolf.HR.Models;
+using SeaWolf.HR.ViewModels;
 
 namespace SeaWolf.HR.Controllers.Api
 {
@@ -48,6 +49,40 @@ namespace SeaWolf.HR.Controllers.Api
             {
                 _logger.LogError($"Failed to get Location/GetLocationDetails: {ex}");
                 return BadRequest("Failed to get location from Location api");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult<Location> AddLocation(AddLocationViewModel model)
+        {
+            try
+            {
+                if (model.AddressLine2 == null) model.AddressLine2 = string.Empty;
+
+                var newLocation = new Location()
+                {
+                    LocationName = model.LocationName,
+                    Phone = model.Phone,
+                    AddressLine1 = model.AddressLine1,
+                    AddressLine2 = model.AddressLine2,
+                    City = model.City,
+                    State = model.State,
+                    PostalCode = model.PostalCode,
+                    Country = model.Country
+                };
+
+                _locationRepository.AddLocation(newLocation);
+
+                if (_locationRepository.Save())
+                {
+                    return CreatedAtRoute("GetLocationDetails", new { id = newLocation.LocationId });
+                }
+                else return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to post Location/AddLocation: {ex}");
+                return BadRequest("Failed to add new location with Location api");
             }
         }
     }
