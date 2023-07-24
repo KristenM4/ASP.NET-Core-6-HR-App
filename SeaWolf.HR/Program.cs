@@ -46,7 +46,9 @@ try
     builder.Services.AddControllersWithViews(options =>
         {
             options.ReturnHttpNotAcceptable = true;
-        }).AddXmlDataContractSerializerFormatters()
+        })
+        .AddNewtonsoftJson()
+        .AddXmlDataContractSerializerFormatters()
         .AddJsonOptions(options =>
         {
             options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
