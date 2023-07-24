@@ -151,7 +151,7 @@ namespace SeaWolf.HR.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult EditEmployee(int id, AddEmployeeViewModel model)
+        public IActionResult EditEmployee(int id, UpdateEmployeeViewModel model)
         {
             try
             {
