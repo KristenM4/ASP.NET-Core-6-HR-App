@@ -122,6 +122,7 @@ namespace SeaWolf.HR.Controllers
             return View();
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult EditEmployee(int id)
         {
@@ -145,6 +146,54 @@ namespace SeaWolf.HR.Controllers
             {
                 _logger.LogError($"Failed to get App/EditEmployee: {ex}");
                 return BadRequest("Failed to get edit employee page");
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult EditEmployee(int id, AddEmployeeViewModel model)
+        {
+            try
+            {
+                var employee = _employeeRepository.GetEmployeeById(id);
+                if (employee == null)
+                {
+                    return NotFound();
+                }
+                ViewBag.Employee = employee;
+
+                var allLocations = _locationRepository.AllLocations.ToList();
+                allLocations.Remove(employee.Location);
+                ViewBag.AllLocations = allLocations;
+
+                if (ModelState.IsValid)
+                {
+                    var modelLocation = _locationRepository.GetLocationByName(model.Location);
+
+                    employee.FirstName = model.FirstName;
+                    employee.LastName = model.LastName;
+                    employee.MiddleName = model.MiddleName;
+                    employee.DateOfBirth = model.DateOfBirth;
+                    employee.Email = model.Email;
+                    employee.Phone = model.Phone;
+                    employee.Position = model.Position;
+                    employee.Location = modelLocation;
+
+
+                    if (_employeeRepository.Save())
+                    {
+                        return RedirectToAction("EmployeeDetails", "App", new { id = employee.EmployeeId });
+                    }
+                }
+
+                ModelState.AddModelError("", "Failed to edit employee");
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to post App/EditEmployee: {ex}");
+                return BadRequest("Failed to edit employee");
             }
         }
 
