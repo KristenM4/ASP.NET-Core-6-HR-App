@@ -197,6 +197,7 @@ namespace SeaWolf.HR.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult DeleteEmployee(int id)
         {
@@ -244,6 +245,8 @@ namespace SeaWolf.HR.Controllers
             }
         }
 
+        [Authorize]
+        [HttpGet]
         public IActionResult AddLocation()
         {
             try
@@ -258,6 +261,7 @@ namespace SeaWolf.HR.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult AddLocation(AddLocationViewModel model)
         {
@@ -291,6 +295,73 @@ namespace SeaWolf.HR.Controllers
             return View();
         }
 
+        [Authorize]
+        [HttpGet]
+        public IActionResult EditLocation(int id)
+        {
+            try
+            {
+                var location = _locationRepository.GetLocationById(id);
+                if (location == null)
+                {
+                    return NotFound();
+                }
+                ViewBag.Location = location;
+                return View();
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to get App/EditLocation: {ex}");
+                return BadRequest("Failed to get edit location page");
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        public IActionResult EditLocation(int id, AddLocationViewModel model)
+        {
+            try
+            {
+                var location = _locationRepository.GetLocationById(id);
+                if (location == null)
+                {
+                    return NotFound();
+                }
+                ViewBag.Location = location;
+
+                if (ModelState.IsValid)
+                {
+                    if (model.AddressLine2 == null) model.AddressLine2 = string.Empty;
+
+                    location.LocationName = model.LocationName;
+                    location.Phone = model.Phone;
+                    location.AddressLine1 = model.AddressLine1;
+                    location.AddressLine2 = model.AddressLine2;
+                    location.City = model.City;
+                    location.State = model.State;
+                    location.PostalCode = model.PostalCode;
+                    location.Country = model.Country;
+
+
+                    if (_locationRepository.Save())
+                    {
+                        return RedirectToAction("LocationDetails", "App", new { id = location.LocationId });
+                    }
+                }
+
+                ModelState.AddModelError("", "Failed to edit location");
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to post App/EditLocation: {ex}");
+                return BadRequest("Failed to edit location");
+            }
+        }
+
+        [Authorize]
         [HttpGet]
         public IActionResult DeleteLocation(int id)
         {
