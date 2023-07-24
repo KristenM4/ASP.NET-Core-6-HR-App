@@ -319,7 +319,7 @@ namespace SeaWolf.HR.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult EditLocation(int id, AddLocationViewModel model)
+        public IActionResult EditLocation(int id, UpdateLocationViewModel model)
         {
             try
             {
