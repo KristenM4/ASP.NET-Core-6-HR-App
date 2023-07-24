@@ -52,7 +52,7 @@
     <div class="SW-delete-data">
         @if (ViewBag.Employees.Count == 0)
         {
-            <p>Are you sure you want to delete this location? This action will <b>permanantly</b> remove this location's data from the database.</p>
+            <p>Are you sure you want to delete this location? This action will <b>permanently</b> remove this location's data from the database.</p>
             <a asp-action="DeleteLocation" asp-controller="App" asp-route-id="@Model.LocationId" class="btn btn-danger">
                 Delete Location
             </a>
