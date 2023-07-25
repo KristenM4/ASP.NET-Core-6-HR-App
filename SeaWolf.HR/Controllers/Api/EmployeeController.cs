@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using SeaWolf.HR.Models;
 using SeaWolf.HR.ViewModels;
@@ -63,28 +64,32 @@ namespace SeaWolf.HR.Controllers.Api
         {
             try
             {
-                var modelLocation = _locationRepository.GetLocationByName(model.Location);
-                if (modelLocation == null) return BadRequest();
-
-                var newEmployee = new Employee()
+                if (ModelState.IsValid)
                 {
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    MiddleName = model.MiddleName,
-                    DateOfBirth = model.DateOfBirth,
-                    Email = model.Email,
-                    Phone = model.Phone,
-                    Position = model.Position,
-                    Location = modelLocation,
-                };
+                    var modelLocation = _locationRepository.GetLocationByName(model.Location);
+                    if (modelLocation == null) return BadRequest();
 
-                _employeeRepository.AddEmployee(newEmployee);
+                    var newEmployee = new Employee()
+                    {
+                        FirstName = model.FirstName,
+                        LastName = model.LastName,
+                        MiddleName = model.MiddleName,
+                        DateOfBirth = model.DateOfBirth,
+                        Email = model.Email,
+                        Phone = model.Phone,
+                        Position = model.Position,
+                        Location = modelLocation,
+                    };
 
-                if (_employeeRepository.Save())
-                {
-                    return CreatedAtRoute("GetEmployeeDetails", new { id = newEmployee.EmployeeId });
+                    _employeeRepository.AddEmployee(newEmployee);
+
+                    if (_employeeRepository.Save())
+                    {
+                        return CreatedAtRoute("GetEmployeeDetails", new { id = newEmployee.EmployeeId });
+                    }
+                    else return BadRequest();
                 }
-                else return BadRequest();
+                else return BadRequest(ModelState);
             }
             catch (Exception ex)
             {
@@ -115,9 +120,14 @@ namespace SeaWolf.HR.Controllers.Api
                     employee.Position = model.Position;
                     employee.Location = modelLocation;
 
-                    return NoContent();
+                    if (_employeeRepository.Save())
+                    {
+                        return NoContent();
+
+                    }
+                    else return BadRequest();
                 }
-                else return BadRequest();
+                else return BadRequest(ModelState);
             }
             catch (Exception ex)
             {
@@ -125,6 +135,62 @@ namespace SeaWolf.HR.Controllers.Api
                 return BadRequest("Failed to update employee details with Employee api");
             }
 
+        }
+
+        [HttpPatch("{id}")]
+        public IActionResult PartiallyUpdateEmployee(int id, JsonPatchDocument<UpdateEmployeeViewModel> patchDocument)
+        {
+            try
+            {
+                var employeeInDB = _employeeRepository.GetEmployeeById(id);
+                if (employeeInDB == null) return NotFound();
+
+                // map Employee to UpdateEmployeeViewModel
+                var employeeToPatch = new UpdateEmployeeViewModel()
+                {
+                    FirstName = employeeInDB.FirstName,
+                    LastName = employeeInDB.LastName,
+                    MiddleName = employeeInDB.MiddleName,
+                    DateOfBirth = employeeInDB.DateOfBirth,
+                    Email = employeeInDB.Email,
+                    Phone = employeeInDB.Phone,
+                    Position = employeeInDB.Position,
+                    Location = employeeInDB.Location.LocationName
+                };
+
+                patchDocument.ApplyTo(employeeToPatch, ModelState);
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                if (!TryValidateModel(employeeToPatch))
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var employeeToPatchLocation = _locationRepository.GetLocationByName(employeeToPatch.Location);
+                if (employeeToPatchLocation == null) return NotFound();
+
+                // apply changes if it passes all validation checks
+
+                employeeInDB.FirstName = employeeToPatch.FirstName;
+                employeeInDB.LastName = employeeToPatch.LastName;
+                employeeInDB.MiddleName = employeeToPatch.MiddleName;
+                employeeInDB.DateOfBirth = employeeToPatch.DateOfBirth;
+                employeeInDB.Email = employeeToPatch.Email;
+                employeeInDB.Phone = employeeToPatch.Phone;
+                employeeInDB.Position = employeeToPatch.Position;
+                employeeInDB.Location = employeeToPatchLocation;
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to patch Employee/PartiallyUpdateEmployee: {ex}");
+                return BadRequest("Failed to partially update employee details with Employee api");
+            }
         }
     }
 }
