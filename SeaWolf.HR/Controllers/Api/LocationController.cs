@@ -10,11 +10,13 @@ namespace SeaWolf.HR.Controllers.Api
     public class LocationController : ControllerBase
     {
         private readonly ILocationRepository _locationRepository;
+        private readonly IEmployeeRepository _employeeRepository;
         private readonly ILogger<LocationController> _logger;
 
-        public LocationController(ILocationRepository locationRepository, ILogger<LocationController> logger)
+        public LocationController(ILocationRepository locationRepository, IEmployeeRepository employeeRepository, ILogger<LocationController> logger)
         {
             _locationRepository = locationRepository;
+            _employeeRepository = employeeRepository;
             _logger = logger;
         }
 
@@ -175,6 +177,35 @@ namespace SeaWolf.HR.Controllers.Api
             {
                 _logger.LogError($"Failed to patch Location/PartiallyUpdateLocation: {ex}");
                 return BadRequest("Failed to partially update location details with Location api");
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteLocation(int id)
+        {
+            try
+            {
+                var location = _locationRepository.GetLocationById(id);
+                if (location == null) return NotFound();
+
+                var employeesForLocation = _employeeRepository.GetEmployeesForLocation(id);
+                if (employeesForLocation.Count() > 0)
+                {
+                    return BadRequest("Locations with employees may not be deleted. Delete or reassign this location's employees to another location.");
+                }
+
+                _locationRepository.DeleteLocation(id);
+
+                if (_locationRepository.Save())
+                {
+                    return NoContent();
+                }
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to delete at Location/DeleteLocation: {ex}");
+                return BadRequest("Failed to delete location with Location api");
             }
         }
     }
