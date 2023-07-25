@@ -10,12 +10,14 @@ namespace SeaWolf.HR.Controllers
     public class LocationControllerTests
     {
         private readonly Mock<ILocationRepository> _mockLocationRepository;
+        private readonly Mock<IEmployeeRepository> _mockEmployeeRepository;
         private readonly LocationController _controller;
 
         public LocationControllerTests()
         {
             _mockLocationRepository = RepositoryMocks.GetLocationRepository();
-            _controller = new LocationController(_mockLocationRepository.Object, Mock.Of<ILogger<LocationController>>());
+            _mockEmployeeRepository = RepositoryMocks.GetEmployeeRepository();
+            _controller = new LocationController(_mockLocationRepository.Object, _mockEmployeeRepository.Object, Mock.Of<ILogger<LocationController>>());
         }
 
         [Fact]
