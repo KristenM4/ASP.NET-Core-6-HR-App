@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Mvc;
 using SeaWolf.HR.Models;
 using SeaWolf.HR.ViewModels;
 
@@ -83,6 +84,97 @@ namespace SeaWolf.HR.Controllers.Api
             {
                 _logger.LogError($"Failed to post Location/AddLocation: {ex}");
                 return BadRequest("Failed to add new location with Location api");
+            }
+        }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateLocation(int id, UpdateLocationViewModel model)
+        {
+            try
+            {
+                var location = _locationRepository.GetLocationById(id);
+                if (location == null) return NotFound();
+                if (model.AddressLine2 == null) model.AddressLine2 = string.Empty;
+
+                if (ModelState.IsValid)
+                {
+                    location.LocationName = model.LocationName;
+                    location.Phone = model.Phone;
+                    location.AddressLine1 = model.AddressLine1;
+                    location.AddressLine2 = model.AddressLine2;
+                    location.City = model.City;
+                    location.State = model.State;
+                    location.PostalCode = model.PostalCode;
+                    location.Country = model.Country;
+
+                    if (_locationRepository.Save())
+                    {
+                        return NoContent();
+
+                    }
+                    else return BadRequest();
+                }
+                else return BadRequest(ModelState);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to put Location/UpdateLocation: {ex}");
+                return BadRequest("Failed to update location details with Location api");
+            }
+
+        }
+
+        [HttpPatch("{id}")]
+        public IActionResult PartiallyUpdateLocation(int id, JsonPatchDocument<UpdateLocationViewModel> patchDocument)
+        {
+            try
+            {
+                var locationInDB = _locationRepository.GetLocationById(id);
+                if (locationInDB == null) return NotFound();
+
+                // map Location to UpdateLocationViewModel
+                var locationToPatch = new UpdateLocationViewModel()
+                {
+                    LocationName = locationInDB.LocationName,
+                    Phone = locationInDB.Phone,
+                    AddressLine1 = locationInDB.AddressLine1,
+                    AddressLine2 = locationInDB.AddressLine2,
+                    City = locationInDB.City,
+                    State = locationInDB.State,
+                    PostalCode = locationInDB.PostalCode,
+                    Country = locationInDB.Country
+                };
+
+                patchDocument.ApplyTo(locationToPatch, ModelState);
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                if (!TryValidateModel(locationToPatch))
+                {
+                    return BadRequest(ModelState);
+                }
+
+                // apply changes if it passes all validation checks
+                if (locationToPatch.AddressLine2 == null) locationToPatch.AddressLine2 = string.Empty;
+
+                locationInDB.LocationName = locationToPatch.LocationName;
+                locationInDB.Phone = locationToPatch.Phone;
+                locationInDB.AddressLine1 = locationToPatch.AddressLine1;
+                locationInDB.AddressLine2 = locationToPatch.AddressLine2;
+                locationInDB.City = locationToPatch.City;
+                locationInDB.State = locationToPatch.State;
+                locationInDB.PostalCode = locationToPatch.PostalCode;
+                locationInDB.Country = locationToPatch.Country;
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to patch Location/PartiallyUpdateLocation: {ex}");
+                return BadRequest("Failed to partially update location details with Location api");
             }
         }
     }
