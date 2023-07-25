@@ -92,5 +92,39 @@ namespace SeaWolf.HR.Controllers.Api
                 return BadRequest("Failed to add new employee with Employee api");
             }
         }
+
+        [HttpPut("{id}")]
+        public IActionResult UpdateEmployee(int id, UpdateEmployeeViewModel model)
+        {
+            try
+            {
+                var employee = _employeeRepository.GetEmployeeById(id);
+                if (employee == null) return NotFound();
+
+                var modelLocation = _locationRepository.GetLocationByName(model.Location);
+                if (modelLocation == null) return NotFound();
+
+                if (ModelState.IsValid)
+                {
+                    employee.FirstName = model.FirstName;
+                    employee.LastName = model.LastName;
+                    employee.MiddleName = model.MiddleName;
+                    employee.DateOfBirth = model.DateOfBirth;
+                    employee.Email = model.Email;
+                    employee.Phone = model.Phone;
+                    employee.Position = model.Position;
+                    employee.Location = modelLocation;
+
+                    return NoContent();
+                }
+                else return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to put Employee/UpdateEmployee: {ex}");
+                return BadRequest("Failed to update employee details with Employee api");
+            }
+
+        }
     }
 }
