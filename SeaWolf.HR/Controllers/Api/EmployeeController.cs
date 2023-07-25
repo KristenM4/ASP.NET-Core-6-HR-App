@@ -192,5 +192,27 @@ namespace SeaWolf.HR.Controllers.Api
                 return BadRequest("Failed to partially update employee details with Employee api");
             }
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult DeleteEmployee(int id)
+        {
+            try
+            {
+                var employee = _employeeRepository.GetEmployeeById(id);
+                if (employee == null) return NotFound();
+
+                _employeeRepository.DeleteEmployee(id);
+                if (_employeeRepository.Save())
+                {
+                    return NoContent();
+                }
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to delete at Employee/DeleteEmployee: {ex}");
+                return BadRequest("Failed to delete employee with Employee api");
+            }
+        }
     }
 }
