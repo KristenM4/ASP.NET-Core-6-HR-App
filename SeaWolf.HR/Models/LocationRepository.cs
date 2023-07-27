@@ -27,13 +27,23 @@ namespace SeaWolf.HR.Models
             }
         }
 
-        public Location? GetLocationById(int locationId)
+        public Location? GetLocationById(int locationId, bool includeEmployees = false)
         {
+            if (includeEmployees)
+            {
+                return _context.Locations.Include(l => l.Employees).FirstOrDefault(l => l.LocationId == locationId);
+            }
+
             return _context.Locations.FirstOrDefault(l => l.LocationId == locationId);
         }
 
-        public Location? GetLocationByName(string name)
+        public Location? GetLocationByName(string name, bool includeEmployees = false)
         {
+            if (includeEmployees)
+            {
+                return _context.Locations.Include(l => l.Employees).FirstOrDefault(l => l.LocationName == name);
+            }
+
             return _context.Locations.FirstOrDefault(l => l.LocationName == name);
         }
 
