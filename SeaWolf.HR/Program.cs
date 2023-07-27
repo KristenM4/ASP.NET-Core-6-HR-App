@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Reflection;
+using Newtonsoft.Json;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
@@ -47,7 +48,10 @@ try
         {
             options.ReturnHttpNotAcceptable = true;
         })
-        .AddNewtonsoftJson()
+        .AddNewtonsoftJson(options => 
+        { 
+            options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; 
+        })
         .AddXmlDataContractSerializerFormatters()
         .AddJsonOptions(options =>
         {
