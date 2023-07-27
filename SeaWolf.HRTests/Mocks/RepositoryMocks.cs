@@ -68,10 +68,10 @@ namespace SeaWolf.HRTests.Mocks
             var mockLocationRepository = new Mock<ILocationRepository>();
             mockLocationRepository.Setup(repo => repo.AllLocations).Returns(locations);
             // invalid id
-            mockLocationRepository.Setup(repo => repo.GetLocationById(99))
+            mockLocationRepository.Setup(repo => repo.GetLocationById(99, false))
                 .Returns(locations.FirstOrDefault(e => e.LocationId == 99));
             // valid id
-            mockLocationRepository.Setup(repo => repo.GetLocationById(1)).Returns(locations[0]);
+            mockLocationRepository.Setup(repo => repo.GetLocationById(1, false)).Returns(locations[0]);
             mockLocationRepository.Setup(repo => repo.SearchLocations("Waianae"))
                 .Returns(locations.Where(e => e.City == "Waianae"));
             return mockLocationRepository;
