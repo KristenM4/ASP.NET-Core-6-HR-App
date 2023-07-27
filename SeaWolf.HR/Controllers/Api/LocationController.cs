@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using SeaWolf.HR.Models;
 using SeaWolf.HR.ViewModels;
@@ -12,12 +13,17 @@ namespace SeaWolf.HR.Controllers.Api
         private readonly ILocationRepository _locationRepository;
         private readonly IEmployeeRepository _employeeRepository;
         private readonly ILogger<LocationController> _logger;
+        private readonly IMapper _mapper;
 
-        public LocationController(ILocationRepository locationRepository, IEmployeeRepository employeeRepository, ILogger<LocationController> logger)
+        public LocationController(ILocationRepository locationRepository,
+            IEmployeeRepository employeeRepository, 
+            ILogger<LocationController> logger,
+            IMapper mapper)
         {
             _locationRepository = locationRepository;
             _employeeRepository = employeeRepository;
             _logger = logger;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -35,7 +41,7 @@ namespace SeaWolf.HR.Controllers.Api
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetLocationDetails")]
         public IActionResult GetLocationDetails(int id, bool includeEmployees = false)
         {
             try
@@ -57,31 +63,25 @@ namespace SeaWolf.HR.Controllers.Api
         }
 
         [HttpPost]
-        public ActionResult<Location> AddLocation(AddLocationViewModel model)
+        public ActionResult<Location> AddLocation([FromBody] AddLocationViewModel model)
         {
             try
             {
                 if (model.AddressLine2 == null) model.AddressLine2 = string.Empty;
 
-                var newLocation = new Location()
+                if (ModelState.IsValid)
                 {
-                    LocationName = model.LocationName,
-                    Phone = model.Phone,
-                    AddressLine1 = model.AddressLine1,
-                    AddressLine2 = model.AddressLine2,
-                    City = model.City,
-                    State = model.State,
-                    PostalCode = model.PostalCode,
-                    Country = model.Country
-                };
+                    var newLocation = _mapper.Map<Location>(model);
 
-                _locationRepository.AddLocation(newLocation);
+                    _locationRepository.AddLocation(newLocation);
 
-                if (_locationRepository.Save())
-                {
-                    return CreatedAtRoute("GetLocationDetails", new { id = newLocation.LocationId });
+                    if (_locationRepository.Save())
+                    {
+                        return CreatedAtRoute("GetLocationDetails", new { id = newLocation.LocationId }, newLocation);
+                    }
+                    else return BadRequest();
                 }
-                else return BadRequest();
+                else return BadRequest(ModelState);
             }
             catch (Exception ex)
             {
