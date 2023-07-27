@@ -10,7 +10,7 @@ namespace SeaWolf.HR.Profiles
         {
             CreateMap<AddLocationViewModel, Location>();
             CreateMap<Location, GetAllLocationsViewModel>();
-            CreateMap<UpdateLocationViewModel, Location>();
+            CreateMap<UpdateLocationViewModel, Location>().ReverseMap();
         }
     }
 }

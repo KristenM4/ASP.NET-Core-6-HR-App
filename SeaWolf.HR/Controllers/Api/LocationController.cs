@@ -130,41 +130,20 @@ namespace SeaWolf.HR.Controllers.Api
                 if (locationInDB == null) return NotFound();
 
                 // map Location to UpdateLocationViewModel
-                var locationToPatch = new UpdateLocationViewModel()
-                {
-                    LocationName = locationInDB.LocationName,
-                    Phone = locationInDB.Phone,
-                    AddressLine1 = locationInDB.AddressLine1,
-                    AddressLine2 = locationInDB.AddressLine2,
-                    City = locationInDB.City,
-                    State = locationInDB.State,
-                    PostalCode = locationInDB.PostalCode,
-                    Country = locationInDB.Country
-                };
+                var locationToPatch = _mapper.Map<UpdateLocationViewModel>(locationInDB);
 
                 patchDocument.ApplyTo(locationToPatch, ModelState);
 
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
+                if (!ModelState.IsValid) return BadRequest(ModelState);
 
-                if (!TryValidateModel(locationToPatch))
-                {
-                    return BadRequest(ModelState);
-                }
+                if (!TryValidateModel(locationToPatch)) return BadRequest(ModelState);
 
                 // apply changes if it passes all validation checks
                 if (locationToPatch.AddressLine2 == null) locationToPatch.AddressLine2 = string.Empty;
 
-                locationInDB.LocationName = locationToPatch.LocationName;
-                locationInDB.Phone = locationToPatch.Phone;
-                locationInDB.AddressLine1 = locationToPatch.AddressLine1;
-                locationInDB.AddressLine2 = locationToPatch.AddressLine2;
-                locationInDB.City = locationToPatch.City;
-                locationInDB.State = locationToPatch.State;
-                locationInDB.PostalCode = locationToPatch.PostalCode;
-                locationInDB.Country = locationToPatch.Country;
+                _mapper.Map(locationToPatch, locationInDB);
+
+                _locationRepository.Save();
 
                 return NoContent();
             }
