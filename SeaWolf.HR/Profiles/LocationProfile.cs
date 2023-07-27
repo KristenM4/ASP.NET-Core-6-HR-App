@@ -9,6 +9,7 @@ namespace SeaWolf.HR.Profiles
         public LocationProfile()
         {
             CreateMap<AddLocationViewModel, Location>();
+            CreateMap<Location, GetAllLocationsViewModel>();
         }
     }
 }

@@ -32,7 +32,8 @@ namespace SeaWolf.HR.Controllers.Api
             try
             {
                 var allLocations = _locationRepository.AllLocations;
-                return Ok(allLocations);
+                var allLocationsMapped = _mapper.Map<IEnumerable<GetAllLocationsViewModel>>(allLocations);
+                return Ok(allLocationsMapped);
             }
             catch (Exception ex)
             {
