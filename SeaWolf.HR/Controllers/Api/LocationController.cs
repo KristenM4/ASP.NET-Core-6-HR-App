@@ -102,14 +102,7 @@ namespace SeaWolf.HR.Controllers.Api
 
                 if (ModelState.IsValid)
                 {
-                    location.LocationName = model.LocationName;
-                    location.Phone = model.Phone;
-                    location.AddressLine1 = model.AddressLine1;
-                    location.AddressLine2 = model.AddressLine2;
-                    location.City = model.City;
-                    location.State = model.State;
-                    location.PostalCode = model.PostalCode;
-                    location.Country = model.Country;
+                    _mapper.Map(model, location);
 
                     if (_locationRepository.Save())
                     {
