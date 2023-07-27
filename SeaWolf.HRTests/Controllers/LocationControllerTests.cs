@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using SeaWolf.HR.Controllers.Api;
@@ -17,7 +18,10 @@ namespace SeaWolf.HR.Controllers
         {
             _mockLocationRepository = RepositoryMocks.GetLocationRepository();
             _mockEmployeeRepository = RepositoryMocks.GetEmployeeRepository();
-            _controller = new LocationController(_mockLocationRepository.Object, _mockEmployeeRepository.Object, Mock.Of<ILogger<LocationController>>());
+            _controller = new LocationController(_mockLocationRepository.Object,
+                _mockEmployeeRepository.Object,
+                Mock.Of<ILogger<LocationController>>(),
+                Mock.Of<IMapper>());
         }
 
         [Fact]
