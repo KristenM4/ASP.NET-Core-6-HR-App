@@ -4,6 +4,8 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using SeaWolf.HR.Controllers.Api;
 using SeaWolf.HR.Models;
+using SeaWolf.HR.Profiles;
+using SeaWolf.HR.ViewModels;
 using SeaWolf.HRTests.Mocks;
 
 namespace SeaWolf.HR.Controllers
@@ -18,10 +20,17 @@ namespace SeaWolf.HR.Controllers
         {
             _mockLocationRepository = RepositoryMocks.GetLocationRepository();
             _mockEmployeeRepository = RepositoryMocks.GetEmployeeRepository();
+
+            var mockMapper = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new LocationProfile());
+            });
+            var mapper = mockMapper.CreateMapper();
+
             _controller = new LocationController(_mockLocationRepository.Object,
                 _mockEmployeeRepository.Object,
                 Mock.Of<ILogger<LocationController>>(),
-                Mock.Of<IMapper>());
+                mapper);
         }
 
         [Fact]
@@ -29,7 +38,7 @@ namespace SeaWolf.HR.Controllers
         {
             var actionResult = _controller.GetAllLocations();
             var result = actionResult as OkObjectResult;
-            var value = result.Value as IEnumerable<Location>;
+            var value = result.Value as IEnumerable<GetAllLocationsViewModel>;
 
             Assert.IsType<OkObjectResult>(actionResult);
             Assert.Equal(2, value.Count());
