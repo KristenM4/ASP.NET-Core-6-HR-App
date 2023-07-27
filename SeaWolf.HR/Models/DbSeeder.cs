@@ -90,6 +90,7 @@ namespace SeaWolf.HR.Models
             if (!context.Employees.Any())
             {
                 var farringtonStore = context.Locations.FirstOrDefault(l => l.LocationName == "Farrington Store");
+                var seawolfwarehouse = context.Locations.FirstOrDefault(l => l.LocationName == "SeaWolf Warehouse");
 
                 context.AddRange(
                 new Employee()
@@ -148,7 +149,92 @@ namespace SeaWolf.HR.Models
                     Phone = "1234567894",
                     Position = "Cleaner",
                     Location = farringtonStore
-                });
+                },
+                new Employee()
+                {
+                    FirstName = "Deborah",
+                    LastName = "Jones",
+                    DateOfBirth = new DateTime(1984, 06, 01),
+                    Email = "djones@email.com",
+                    Phone = "1234567895",
+                    Position = "Head Supervisor",
+                    Location = seawolfwarehouse
+                },
+                new Employee()
+                {
+                    FirstName = "Juan",
+                    LastName = "Lopez",
+                    MiddleName = "Roberto",
+                    DateOfBirth = new DateTime(1989, 01, 02),
+                    Email = "jlopez@email.com",
+                    Phone = "1234567896",
+                    Position = "Assistant Supervisor",
+                    Location = seawolfwarehouse
+                },
+                new Employee()
+                {
+                    FirstName = "Steven",
+                    LastName = "Smith",
+                    DateOfBirth = new DateTime(1991, 12, 12),
+                    Email = "ssmith@email.com",
+                    Phone = "1234567897",
+                    Position = "Delivery Driver",
+                    Location = seawolfwarehouse
+                },
+                new Employee()
+                {
+                    FirstName = "Patricia",
+                    LastName = "Parker",
+                    MiddleName = "Ann",
+                    DateOfBirth = new DateTime(1995, 08, 17),
+                    Email = "pparker@email.com",
+                    Phone = "1234567898",
+                    Position = "Delivery Driver",
+                    Location = seawolfwarehouse
+                },
+                new Employee()
+                {
+                    FirstName = "Felicia",
+                    LastName = "Patel",
+                    DateOfBirth = new DateTime(1988, 05, 29),
+                    Email = "fpatel@email.com",
+                    Phone = "1234567899",
+                    Position = "Warehouse Operative",
+                    Location = seawolfwarehouse
+                },
+                new Employee()
+                {
+                    FirstName = "Leonardo",
+                    MiddleName = "Lorenzo",
+                    LastName = "Da Vinci",
+                    DateOfBirth = new DateTime(1997, 12, 14),
+                    Email = "ldavinci@email.com",
+                    Phone = "1234567810",
+                    Position = "Warehouse Operative",
+                    Location = seawolfwarehouse
+                },
+                new Employee()
+                {
+                    FirstName = "Charles",
+                    LastName = "Lee",
+                    DateOfBirth = new DateTime(1989, 09, 09),
+                    Email = "clee@email.com",
+                    Phone = "1234567811",
+                    Position = "Warehouse Operative",
+                    Location = seawolfwarehouse
+                },
+                new Employee()
+                {
+                    FirstName = "Sara",
+                    MiddleName = "Lee",
+                    LastName = "Jones",
+                    DateOfBirth = new DateTime(1993, 01, 21),
+                    Email = "sjones@email.com",
+                    Phone = "1234567812",
+                    Position = "Warehouse Operative",
+                    Location = seawolfwarehouse
+                }
+                );
             }
 
             context.SaveChanges();
