@@ -36,11 +36,12 @@ namespace SeaWolf.HR.Controllers.Api
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetLocationDetails(int id)
+        public IActionResult GetLocationDetails(int id, bool includeEmployees = false)
         {
             try
             {
-                var location = _locationRepository.GetLocationById(id);
+                var location = _locationRepository.GetLocationById(id, includeEmployees);
+
                 if (location == null)
                 {
                     return NotFound();
