@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using SeaWolf.HR.Controllers.Api;
 using SeaWolf.HR.Models;
 using SeaWolf.HRTests.Mocks;
+using System.Security.Claims;
+using System.Security.Principal;
 
 namespace SeaWolf.HR.Controllers
 {
@@ -17,7 +20,15 @@ namespace SeaWolf.HR.Controllers
         {
             _mockEmployeeRepository = RepositoryMocks.GetEmployeeRepository();
             _mockLocationRepository = RepositoryMocks.GetLocationRepository();
+            
             _controller = new EmployeeController(_mockEmployeeRepository.Object, _mockLocationRepository.Object, Mock.Of<ILogger<EmployeeController>>());
+
+            // create tester identity to pass identity checks in controller
+            var identity = new GenericIdentity("tester");
+            identity.AddClaim(new Claim("Name", "tester"));
+            var principal = new ClaimsPrincipal(identity);
+            var context = new DefaultHttpContext() { User = principal };
+            _controller.ControllerContext = new ControllerContext { HttpContext = context };
         }
 
         [Fact]
