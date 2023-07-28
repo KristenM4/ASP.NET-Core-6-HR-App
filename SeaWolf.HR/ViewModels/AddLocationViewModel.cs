@@ -1,32 +1,31 @@
-﻿using SeaWolf.HR.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SeaWolf.HR.ViewModels
 {
     public class AddLocationViewModel
     {
 
-        [Required]
+        [Required(ErrorMessage = "Location name is required")]
         public string LocationName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Location phone number is required")]
         public string Phone { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Street address is required")]
         public string AddressLine1 { get; set; }
 
         public string? AddressLine2 { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "City is required")]
         public string City { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "State is required")]
         public string State { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Postal code(zipcode) is required")]
         public string PostalCode { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Country is required")]
         public string Country { get; set; }
     }
 }
