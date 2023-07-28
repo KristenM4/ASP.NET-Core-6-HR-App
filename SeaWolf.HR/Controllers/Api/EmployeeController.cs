@@ -44,12 +44,14 @@ namespace SeaWolf.HR.Controllers.Api
         {
             try
             {
+                string? userName = User.Identity.Name;
                 var employee = _employeeRepository.GetEmployeeById(id);
                 if (employee == null)
                 {
                     return NotFound();
                 }
 
+                _logger.LogInformation($"Employee details were accessed by {userName}");
                 return Ok(employee);
             }
             catch (Exception ex)
@@ -66,6 +68,7 @@ namespace SeaWolf.HR.Controllers.Api
             {
                 if (ModelState.IsValid)
                 {
+                    string? userName = User.Identity.Name;
                     var modelLocation = _locationRepository.GetLocationByName(model.Location);
                     if (modelLocation == null) return BadRequest();
 
@@ -85,7 +88,8 @@ namespace SeaWolf.HR.Controllers.Api
 
                     if (_employeeRepository.Save())
                     {
-                        return CreatedAtRoute("GetEmployeeDetails", new { id = newEmployee.EmployeeId });
+                        _logger.LogInformation($"New employee with id of {newEmployee.EmployeeId} created by {userName}");
+                        return CreatedAtRoute("GetEmployeeDetails", new { id = newEmployee.EmployeeId }, newEmployee);
                     }
                     else return BadRequest();
                 }
@@ -103,6 +107,7 @@ namespace SeaWolf.HR.Controllers.Api
         {
             try
             {
+                string? userName = User.Identity.Name;
                 var employee = _employeeRepository.GetEmployeeById(id);
                 if (employee == null) return NotFound();
 
@@ -122,6 +127,7 @@ namespace SeaWolf.HR.Controllers.Api
 
                     if (_employeeRepository.Save())
                     {
+                        _logger.LogInformation($"Details of employee id {id} updated(HTTP Put) by {userName}");
                         return NoContent();
 
                     }
@@ -142,6 +148,7 @@ namespace SeaWolf.HR.Controllers.Api
         {
             try
             {
+                string? userName = User.Identity.Name;
                 var employeeInDB = _employeeRepository.GetEmployeeById(id);
                 if (employeeInDB == null) return NotFound();
 
@@ -184,6 +191,7 @@ namespace SeaWolf.HR.Controllers.Api
                 employeeInDB.Position = employeeToPatch.Position;
                 employeeInDB.Location = employeeToPatchLocation;
 
+                _logger.LogInformation($"Details of employee id {id} partially updated(HTTP Patch) by {userName}");
                 return NoContent();
             }
             catch (Exception ex)
@@ -198,12 +206,14 @@ namespace SeaWolf.HR.Controllers.Api
         {
             try
             {
+                string? userName = User.Identity.Name;
                 var employee = _employeeRepository.GetEmployeeById(id);
                 if (employee == null) return NotFound();
 
                 _employeeRepository.DeleteEmployee(id);
                 if (_employeeRepository.Save())
                 {
+                    _logger.LogInformation($"Employee with id {id} deleted by {userName}");
                     return NoContent();
                 }
                 return BadRequest();
