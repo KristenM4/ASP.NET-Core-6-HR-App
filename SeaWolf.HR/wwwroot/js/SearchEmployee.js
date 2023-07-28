@@ -1,4 +1,25 @@
 $(function () {
+    function pagination(rowsShown = 10) {
+        var rowsTotal = $('tbody tr').length;
+        var numPages = rowsTotal / rowsShown;
+        $('#nav a').html("");
+        for (i = 0; i < numPages; i++) {
+            var pageNum = i + 1;
+            $('#nav').append('<a href="#" rel="' + i + '">' + pageNum + '</a> ');
+        }
+        $('tbody tr').hide();
+        $('tbody tr').slice(0, rowsShown).show();
+        $('#nav a:first').addClass('active');
+        $('#nav a').bind('click', function () {
+            $('#nav a').removeClass('active');
+            $(this).addClass('active');
+            var currPage = $(this).attr('rel');
+            var startItem = currPage * rowsShown;
+            var endItem = startItem + rowsShown;
+            $('tbody tr').css('opacity', '0.0').hide().slice(startItem, endItem).
+                css('display', 'table-row').animate({ opacity: 1 }, 300);
+        });
+    }
     function searchEmployee(searchQuery = "", sorter = "LastName") {
 
         if (searchQuery.length == 0) {
@@ -25,7 +46,8 @@ $(function () {
                     appendElement.append($("<td>").html('<p><a href="/app/employeedetails/' + employee.employeeId + '" class="link-dark text-decoration-none">' + employee.lastName + ", " + employee.firstName + '</a></p>'));
                     appendElement.append($("<td>").html('<p>' + employee.position + '</p>'));
                     appendElement.append($("<td>").html('<p><a href="/app/locationdetails/' + employee.location.locationId + '" class="link-dark text-decoration-none">' + employee.location.locationName + '</a></p>'));
-                });
+                })
+                pagination();
             },
             error: function (xhr, status, error) {
                 console.log(xhr)
