@@ -7,6 +7,8 @@
     <UserSecretsId>4670cb52-ff49-4635-af77-f0d0a70e0d8f</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerComposeProjectPath>..\docker-compose.dcproj</DockerComposeProjectPath>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <DocumentationFile>SeaWolf.HR.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

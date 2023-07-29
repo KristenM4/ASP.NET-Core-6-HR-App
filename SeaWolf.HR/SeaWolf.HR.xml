@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SeaWolf.HR</name>
+    </assembly>
+    <members>
+        <member name="M:SeaWolf.HR.Controllers.Api.EmployeeController.GetEmployeeDetails(System.Int32)">
+            <summary>
+            Get an employee by id number
+            </summary>
+            <param name="id">Id of the employee to get</param>
+            <returns>IActionResult</returns>
+        </member>
+        <member name="T:SeaWolf.HR.Migrations.Initial">
+            <inheritdoc />
+        </member>
+        <member name="M:SeaWolf.HR.Migrations.Initial.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:SeaWolf.HR.Migrations.Initial.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:SeaWolf.HR.Migrations.Initial.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:SeaWolf.HR.Migrations.AddLocations">
+            <inheritdoc />
+        </member>
+        <member name="M:SeaWolf.HR.Migrations.AddLocations.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:SeaWolf.HR.Migrations.AddLocations.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:SeaWolf.HR.Migrations.AddLocations.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:SeaWolf.HR.Migrations.LocationToLocations">
+            <inheritdoc />
+        </member>
+        <member name="M:SeaWolf.HR.Migrations.LocationToLocations.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:SeaWolf.HR.Migrations.LocationToLocations.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:SeaWolf.HR.Migrations.LocationToLocations.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:SeaWolf.HR.Migrations.AddIdentity">
+            <inheritdoc />
+        </member>
+        <member name="M:SeaWolf.HR.Migrations.AddIdentity.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:SeaWolf.HR.Migrations.AddIdentity.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:SeaWolf.HR.Migrations.AddIdentity.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+    </members>
+</doc>
