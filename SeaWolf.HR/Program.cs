@@ -60,6 +60,7 @@ try
 
     builder.Services.AddSwaggerGen();
     builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+    builder.Services.AddApiVersioning();
 
     builder.Services.AddDbContext<SeaWolfHRDbContext>(options => {
         options.UseSqlServer(
