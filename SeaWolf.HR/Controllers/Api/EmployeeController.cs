@@ -9,7 +9,7 @@ using SeaWolf.HR.Views.App;
 namespace SeaWolf.HR.Controllers.Api
 {
     [Route("api/[controller]")]
-    [Authorize(AuthenticationSchemes=JwtBearerDefaults.AuthenticationScheme)]
+    // [Authorize(AuthenticationSchemes=JwtBearerDefaults.AuthenticationScheme)]
     [ApiController]
     public class EmployeeController : ControllerBase
     {
