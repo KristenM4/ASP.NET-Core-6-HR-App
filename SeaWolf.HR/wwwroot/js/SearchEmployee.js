@@ -35,7 +35,7 @@ $(function () {
 
         $.ajax({
             type: "POST",
-            url: "/api/SearchEmployee",
+            url: "/api/v1/searchemployee/",
             data: "\"" + values + "\"",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
