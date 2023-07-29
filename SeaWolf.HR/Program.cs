@@ -58,8 +58,11 @@ try
             options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
         });
 
+    builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
+
     builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
     builder.Services.AddApiVersioning(setupAction =>
     {
         setupAction.AssumeDefaultVersionWhenUnspecified = true;
