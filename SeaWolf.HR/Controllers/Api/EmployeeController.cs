@@ -40,6 +40,11 @@ namespace SeaWolf.HR.Controllers.Api
             }
         }
 
+        /// <summary>
+        /// Get an employee by id number
+        /// </summary>
+        /// <param name="id">Id of the employee to get</param>
+        /// <returns>IActionResult</returns>
         [HttpGet("{id}", Name = "GetEmployeeDetails")]
         public IActionResult GetEmployeeDetails(int id)
         {
