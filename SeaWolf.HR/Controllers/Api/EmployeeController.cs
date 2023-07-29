@@ -8,7 +8,7 @@ using SeaWolf.HR.Views.App;
 
 namespace SeaWolf.HR.Controllers.Api
 {
-    [Route("api/[controller]")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     // [Authorize(AuthenticationSchemes=JwtBearerDefaults.AuthenticationScheme)]
     [ApiVersion("1.0")]
     [ApiController]
