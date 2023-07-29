@@ -10,6 +10,7 @@ namespace SeaWolf.HR.Controllers.Api
 {
     [Route("api/[controller]")]
     // [Authorize(AuthenticationSchemes=JwtBearerDefaults.AuthenticationScheme)]
+    [ApiVersion("1.0")]
     [ApiController]
     public class EmployeeController : ControllerBase
     {
