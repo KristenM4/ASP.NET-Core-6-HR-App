@@ -60,7 +60,12 @@ try
 
     builder.Services.AddSwaggerGen();
     builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
-    builder.Services.AddApiVersioning();
+    builder.Services.AddApiVersioning(setupAction =>
+    {
+        setupAction.AssumeDefaultVersionWhenUnspecified = true;
+        setupAction.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+        setupAction.ReportApiVersions = true;
+    });
 
     builder.Services.AddDbContext<SeaWolfHRDbContext>(options => {
         options.UseSqlServer(
