@@ -47,6 +47,50 @@
             <param name="id">Id of the employee to delete</param>
             <returns>IActionResult</returns>
         </member>
+        <member name="M:SeaWolf.HR.Controllers.Api.LocationController.GetAllLocations">
+            <summary>
+            Get all locations in the database
+            </summary>
+            <returns>IActionResult</returns>
+        </member>
+        <member name="M:SeaWolf.HR.Controllers.Api.LocationController.GetLocationDetails(System.Int32,System.Boolean)">
+            <summary>
+            Get a location by id number
+            </summary>
+            <param name="id">Id of the location to get</param>
+            <param name="includeEmployees">Boolean to include location's employee info</param>
+            <returns>IActionResult</returns>
+        </member>
+        <member name="M:SeaWolf.HR.Controllers.Api.LocationController.AddLocation(SeaWolf.HR.ViewModels.AddLocationViewModel)">
+            <summary>
+            Add a new location to the database
+            </summary>
+            <param name="model">An AddLocationViewModel object with all required properties</param>
+            <returns>A Location ActionResult with the new location's details in the database</returns>
+        </member>
+        <member name="M:SeaWolf.HR.Controllers.Api.LocationController.UpdateLocation(System.Int32,SeaWolf.HR.ViewModels.UpdateLocationViewModel)">
+            <summary>
+            Fully update an existing location
+            </summary>
+            <param name="id">Id of the location to update</param>
+            <param name="model">An UpdateLocationViewModel object with all required properties</param>
+            <returns>IActionResult</returns>
+        </member>
+        <member name="M:SeaWolf.HR.Controllers.Api.LocationController.PartiallyUpdateLocation(System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{SeaWolf.HR.ViewModels.UpdateLocationViewModel})">
+            <summary>
+            Partially update an existing location using JsonPatchDocument
+            </summary>
+            <param name="id">Id of the location to partially update</param>
+            <param name="patchDocument">A JsonPatchDocument object which updates an UpdateLocationViewModel property</param>
+            <returns>IActionResult</returns>
+        </member>
+        <member name="M:SeaWolf.HR.Controllers.Api.LocationController.DeleteLocation(System.Int32)">
+            <summary>
+            Delete a location from the database
+            </summary>
+            <param name="id">Id of the location to delete</param>
+            <returns>IActionResult</returns>
+        </member>
         <member name="T:SeaWolf.HR.Migrations.Initial">
             <inheritdoc />
         </member>

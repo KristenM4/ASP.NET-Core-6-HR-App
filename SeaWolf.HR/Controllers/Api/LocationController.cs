@@ -27,6 +27,10 @@ namespace SeaWolf.HR.Controllers.Api
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Get all locations in the database
+        /// </summary>
+        /// <returns>IActionResult</returns>
         [HttpGet]
         public IActionResult GetAllLocations()
         {
@@ -43,6 +47,12 @@ namespace SeaWolf.HR.Controllers.Api
             }
         }
 
+        /// <summary>
+        /// Get a location by id number
+        /// </summary>
+        /// <param name="id">Id of the location to get</param>
+        /// <param name="includeEmployees">Boolean to include location's employee info</param>
+        /// <returns>IActionResult</returns>
         [HttpGet("{id}", Name = "GetLocationDetails")]
         public IActionResult GetLocationDetails(int id, bool includeEmployees = false)
         {
@@ -64,6 +74,11 @@ namespace SeaWolf.HR.Controllers.Api
             }
         }
 
+        /// <summary>
+        /// Add a new location to the database
+        /// </summary>
+        /// <param name="model">An AddLocationViewModel object with all required properties</param>
+        /// <returns>A Location ActionResult with the new location's details in the database</returns>
         [HttpPost]
         public ActionResult<Location> AddLocation([FromBody] AddLocationViewModel model)
         {
@@ -92,6 +107,12 @@ namespace SeaWolf.HR.Controllers.Api
             }
         }
 
+        /// <summary>
+        /// Fully update an existing location
+        /// </summary>
+        /// <param name="id">Id of the location to update</param>
+        /// <param name="model">An UpdateLocationViewModel object with all required properties</param>
+        /// <returns>IActionResult</returns>
         [HttpPut("{id}")]
         public IActionResult UpdateLocation(int id, UpdateLocationViewModel model)
         {
@@ -122,6 +143,12 @@ namespace SeaWolf.HR.Controllers.Api
 
         }
 
+        /// <summary>
+        /// Partially update an existing location using JsonPatchDocument
+        /// </summary>
+        /// <param name="id">Id of the location to partially update</param>
+        /// <param name="patchDocument">A JsonPatchDocument object which updates an UpdateLocationViewModel property</param>
+        /// <returns>IActionResult</returns>
         [HttpPatch("{id}")]
         public IActionResult PartiallyUpdateLocation(int id, JsonPatchDocument<UpdateLocationViewModel> patchDocument)
         {
@@ -155,6 +182,11 @@ namespace SeaWolf.HR.Controllers.Api
             }
         }
 
+        /// <summary>
+        /// Delete a location from the database
+        /// </summary>
+        /// <param name="id">Id of the location to delete</param>
+        /// <returns>IActionResult</returns>
         [HttpDelete("{id}")]
         public IActionResult DeleteLocation(int id)
         {
