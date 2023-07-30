@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Reflection;
 using Newtonsoft.Json;
+using Microsoft.OpenApi.Models;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
@@ -65,6 +66,24 @@ try
         var xmlCommentsFullPath = Path.Combine(AppContext.BaseDirectory, xmlCommentsFile);
 
         setupAction.IncludeXmlComments(xmlCommentsFullPath);
+
+        setupAction.AddSecurityDefinition("SeaWolfHRApiBearerAuth", new OpenApiSecurityScheme()
+        {
+            Type = SecuritySchemeType.Http,
+            Scheme = "Bearer",
+            Description = "Input valid token to use this API"
+        });
+
+        setupAction.AddSecurityRequirement(new OpenApiSecurityRequirement
+        {
+            {
+                new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "SeaWolfHRApiBearerAuth" }
+                }, new List<string>() }
+        });
     });
 
     builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
