@@ -17,8 +17,22 @@ namespace SeaWolf.HR.Controllers.Api
             _logger = logger;
         }
 
-
+        /// <summary>
+        /// Find locations matching a keyword
+        /// </summary>
+        /// <param name="values">A keyword and sorter(LocatioName, NameDesc, City, CityDesc, Phone, PhoneDesc) separated by a '$$'. Example:
+            /// <example>
+            /// <code>
+            /// "warehouse$$NameDesc"
+            /// </code>
+            /// </example>
+        /// </param>
+        /// <returns>IActionResult</returns>
+        /// <response code="200">Returns a list of matching locations</response>
+        /// <response code="400">API has failed to complete the search</response>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult SearchLocations([FromBody] string values)
         {
             IEnumerable<Location> locations = new List<Location>();

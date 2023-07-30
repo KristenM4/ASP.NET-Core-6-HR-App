@@ -17,8 +17,22 @@ namespace SeaWolf.HR.Controllers.Api
             _logger = logger;
         }
 
-
+        /// <summary>
+        /// Find employees matching a keyword
+        /// </summary>
+        /// <param name="values">A keyword and sorter(LastName, NameDesc, Position, PositionDesc, Location, LocationDesc) separated by a '$$'. Example:
+            /// <example>
+            /// <code>
+            /// "bob$$LastName"
+            /// </code>
+            /// </example>
+        /// </param>
+        /// <returns>IActionResult</returns>
+        /// <response code="200">Returns a list of matching employees</response>
+        /// <response code="400">API has failed to complete the search</response>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult SearchEmployees([FromBody] string values)
         {
             IEnumerable<Employee> employees = new List<Employee>();

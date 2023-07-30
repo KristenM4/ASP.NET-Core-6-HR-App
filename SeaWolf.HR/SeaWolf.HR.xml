@@ -123,6 +123,36 @@
             <response code="404">Location id is not valid</response>
             <response code="400">API failed to delete location, or location has existing employees</response>
         </member>
+        <member name="M:SeaWolf.HR.Controllers.Api.SearchEmployeeController.SearchEmployees(System.String)">
+            <summary>
+            Find employees matching a keyword
+            </summary>
+            <param name="values">A keyword and sorter(LastName, NameDesc, Position, PositionDesc, Location, LocationDesc) separated by a '$$'. Example:
+            <example>
+            <code>
+            "bob$$LastName"
+            </code>
+            </example>
+            </param>
+            <returns>IActionResult</returns>
+            <response code="200">Returns a list of matching employees</response>
+            <response code="400">API has failed to complete the search</response>
+        </member>
+        <member name="M:SeaWolf.HR.Controllers.Api.SearchLocationController.SearchLocations(System.String)">
+            <summary>
+            Find locations matching a keyword
+            </summary>
+            <param name="values">A keyword and sorter(LocatioName, NameDesc, City, CityDesc, Phone, PhoneDesc) separated by a '$$'. Example:
+            <example>
+            <code>
+            "warehouse$$NameDesc"
+            </code>
+            </example>
+            </param>
+            <returns>IActionResult</returns>
+            <response code="200">Returns a list of matching locations</response>
+            <response code="400">API has failed to complete the search</response>
+        </member>
         <member name="T:SeaWolf.HR.Migrations.Initial">
             <inheritdoc />
         </member>
