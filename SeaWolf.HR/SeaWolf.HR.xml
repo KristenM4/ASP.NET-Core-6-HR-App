@@ -4,6 +4,15 @@
         <name>SeaWolf.HR</name>
     </assembly>
     <members>
+        <member name="M:SeaWolf.HR.Controllers.CreateTokenController.Authenticate(SeaWolf.HR.ViewModels.LoginViewModel)">
+            <summary>
+            Generate an authentication token
+            </summary>
+            <param name="model">A valid username and password</param>
+            <returns>IActionResult with token string</returns>
+            <response code="201">Token successfully generated</response>
+            <response code="400">Invalid credentials or API error</response>
+        </member>
         <member name="M:SeaWolf.HR.Controllers.Api.EmployeeController.GetAllEmployees">
             <summary>
             Get all employees in the database
