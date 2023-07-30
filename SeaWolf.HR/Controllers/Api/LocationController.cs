@@ -31,7 +31,11 @@ namespace SeaWolf.HR.Controllers.Api
         /// Get all locations in the database
         /// </summary>
         /// <returns>IActionResult</returns>
+        /// <response code="200">Returns all locations</response>
+        /// <response code="400">API has failed to get all locations</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult GetAllLocations()
         {
             try
@@ -53,7 +57,13 @@ namespace SeaWolf.HR.Controllers.Api
         /// <param name="id">Id of the location to get</param>
         /// <param name="includeEmployees">Boolean to include location's employee info</param>
         /// <returns>IActionResult</returns>
+        /// <response code="200">Returns the specified location</response>
+        /// <response code="404">Location with that id does not exist</response>
+        /// <response code="400">API has failed to get location</response>
         [HttpGet("{id}", Name = "GetLocationDetails")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult GetLocationDetails(int id, bool includeEmployees = false)
         {
             try
@@ -79,7 +89,11 @@ namespace SeaWolf.HR.Controllers.Api
         /// </summary>
         /// <param name="model">An AddLocationViewModel object with all required properties</param>
         /// <returns>A Location ActionResult with the new location's details in the database</returns>
+        /// <response code="201">Displays new location's details</response>
+        /// <response code="400">Invalid data for new location or API error</response>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<Location> AddLocation([FromBody] AddLocationViewModel model)
         {
             try
@@ -113,7 +127,13 @@ namespace SeaWolf.HR.Controllers.Api
         /// <param name="id">Id of the location to update</param>
         /// <param name="model">An UpdateLocationViewModel object with all required properties</param>
         /// <returns>IActionResult</returns>
+        /// <response code="204">Location details successfully updated</response>
+        /// <response code="404">Location id is not valid</response>
+        /// <response code="400">Invalid data for location details or API error</response>
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult UpdateLocation(int id, UpdateLocationViewModel model)
         {
             try
@@ -149,7 +169,13 @@ namespace SeaWolf.HR.Controllers.Api
         /// <param name="id">Id of the location to partially update</param>
         /// <param name="patchDocument">A JsonPatchDocument object which updates an UpdateLocationViewModel property</param>
         /// <returns>IActionResult</returns>
+        /// <response code="204">Location details successfully updated</response>
+        /// <response code="404">Location id is not valid</response>
+        /// <response code="400">Invalid data for location details or API error</response>
         [HttpPatch("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult PartiallyUpdateLocation(int id, JsonPatchDocument<UpdateLocationViewModel> patchDocument)
         {
             try
@@ -187,7 +213,13 @@ namespace SeaWolf.HR.Controllers.Api
         /// </summary>
         /// <param name="id">Id of the location to delete</param>
         /// <returns>IActionResult</returns>
+        /// <response code="204">Location has been sucessfully deleted</response>
+        /// <response code="404">Location id is not valid</response>
+        /// <response code="400">API failed to delete location, or location has existing employees</response>
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult DeleteLocation(int id)
         {
             try

@@ -29,7 +29,11 @@ namespace SeaWolf.HR.Controllers.Api
         /// Get all employees in the database
         /// </summary>
         /// <returns>IActionResult</returns>
+        /// <response code="200">Returns all employees</response>
+        /// <response code="400">API has failed to get all employees</response>
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult GetAllEmployees()
         {
             try
@@ -49,7 +53,13 @@ namespace SeaWolf.HR.Controllers.Api
         /// </summary>
         /// <param name="id">Id of the employee to get</param>
         /// <returns>IActionResult</returns>
+        /// <response code="200">Returns the specified employee</response>
+        /// <response code="404">Employee with that id does not exist</response>
+        /// <response code="400">API has failed to get employee</response>
         [HttpGet("{id}", Name = "GetEmployeeDetails")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult GetEmployeeDetails(int id)
         {
             try
@@ -76,7 +86,11 @@ namespace SeaWolf.HR.Controllers.Api
         /// </summary>
         /// <param name="model">An AddEmployeeViewModel object with all required properties</param>
         /// <returns>An Employee ActionResult with the new employee's details in the database</returns>
+        /// <response code="201">Displays new employee's details</response>
+        /// <response code="400">Invalid data for new employee or API error</response>
         [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<Employee> AddEmployee(AddEmployeeViewModel model)
         {
             try
@@ -123,7 +137,13 @@ namespace SeaWolf.HR.Controllers.Api
         /// <param name="id">Id of the employee to update</param>
         /// <param name="model">An UpdateEmployeeViewModel object with all required properties</param>
         /// <returns>IActionResult</returns>
+        /// <response code="204">Employee details successfully updated</response>
+        /// <response code="404">Employee id or location name not valid</response>
+        /// <response code="400">Invalid data for employee details or API error</response>
         [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult UpdateEmployee(int id, UpdateEmployeeViewModel model)
         {
             try
@@ -170,7 +190,13 @@ namespace SeaWolf.HR.Controllers.Api
         /// <param name="id">Id of the employee to partially update</param>
         /// <param name="patchDocument">A JsonPatchDocument object which updates an UpdateEmployeeViewModel property</param>
         /// <returns>IActionResult</returns>
+        /// <response code="204">Employee details successfully updated</response>
+        /// <response code="404">Employee id or location name not valid</response>
+        /// <response code="400">Invalid data for employee details or API error</response>
         [HttpPatch("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult PartiallyUpdateEmployee(int id, JsonPatchDocument<UpdateEmployeeViewModel> patchDocument)
         {
             try
@@ -233,7 +259,13 @@ namespace SeaWolf.HR.Controllers.Api
         /// </summary>
         /// <param name="id">Id of the employee to delete</param>
         /// <returns>IActionResult</returns>
+        /// <response code="204">Employee has been sucessfully deleted</response>
+        /// <response code="404">Employee id is not valid</response>
+        /// <response code="400">API failed to delete employee</response>
         [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public IActionResult DeleteEmployee(int id)
         {
             try
