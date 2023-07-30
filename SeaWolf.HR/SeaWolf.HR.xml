@@ -4,11 +4,47 @@
         <name>SeaWolf.HR</name>
     </assembly>
     <members>
+        <member name="M:SeaWolf.HR.Controllers.Api.EmployeeController.GetAllEmployees">
+            <summary>
+            Get all employees in the database
+            </summary>
+            <returns>IActionResult</returns>
+        </member>
         <member name="M:SeaWolf.HR.Controllers.Api.EmployeeController.GetEmployeeDetails(System.Int32)">
             <summary>
             Get an employee by id number
             </summary>
             <param name="id">Id of the employee to get</param>
+            <returns>IActionResult</returns>
+        </member>
+        <member name="M:SeaWolf.HR.Controllers.Api.EmployeeController.AddEmployee(SeaWolf.HR.ViewModels.AddEmployeeViewModel)">
+            <summary>
+            Add a new employee to the database
+            </summary>
+            <param name="model">An AddEmployeeViewModel object with all required properties</param>
+            <returns>An Employee ActionResult with the new employee's details in the database</returns>
+        </member>
+        <member name="M:SeaWolf.HR.Controllers.Api.EmployeeController.UpdateEmployee(System.Int32,SeaWolf.HR.ViewModels.UpdateEmployeeViewModel)">
+            <summary>
+            Fully update an existing employee
+            </summary>
+            <param name="id">Id of the employee to update</param>
+            <param name="model">An UpdateEmployeeViewModel object with all required properties</param>
+            <returns>IActionResult</returns>
+        </member>
+        <member name="M:SeaWolf.HR.Controllers.Api.EmployeeController.PartiallyUpdateEmployee(System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{SeaWolf.HR.ViewModels.UpdateEmployeeViewModel})">
+            <summary>
+            Partially update an existing employee using JsonPatchDocument
+            </summary>
+            <param name="id">Id of the employee to partially update</param>
+            <param name="patchDocument">A JsonPatchDocument object which updates an UpdateEmployeeViewModel property</param>
+            <returns>IActionResult</returns>
+        </member>
+        <member name="M:SeaWolf.HR.Controllers.Api.EmployeeController.DeleteEmployee(System.Int32)">
+            <summary>
+            Delete an employee from the database
+            </summary>
+            <param name="id">Id of the employee to delete</param>
             <returns>IActionResult</returns>
         </member>
         <member name="T:SeaWolf.HR.Migrations.Initial">

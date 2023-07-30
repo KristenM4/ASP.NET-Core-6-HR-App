@@ -25,6 +25,10 @@ namespace SeaWolf.HR.Controllers.Api
             _logger = logger;
         }
 
+        /// <summary>
+        /// Get all employees in the database
+        /// </summary>
+        /// <returns>IActionResult</returns>
         [HttpGet]
         public IActionResult GetAllEmployees()
         {
@@ -67,6 +71,11 @@ namespace SeaWolf.HR.Controllers.Api
             }
         }
 
+        /// <summary>
+        /// Add a new employee to the database
+        /// </summary>
+        /// <param name="model">An AddEmployeeViewModel object with all required properties</param>
+        /// <returns>An Employee ActionResult with the new employee's details in the database</returns>
         [HttpPost]
         public ActionResult<Employee> AddEmployee(AddEmployeeViewModel model)
         {
@@ -108,6 +117,12 @@ namespace SeaWolf.HR.Controllers.Api
             }
         }
 
+        /// <summary>
+        /// Fully update an existing employee
+        /// </summary>
+        /// <param name="id">Id of the employee to update</param>
+        /// <param name="model">An UpdateEmployeeViewModel object with all required properties</param>
+        /// <returns>IActionResult</returns>
         [HttpPut("{id}")]
         public IActionResult UpdateEmployee(int id, UpdateEmployeeViewModel model)
         {
@@ -149,6 +164,12 @@ namespace SeaWolf.HR.Controllers.Api
 
         }
 
+        /// <summary>
+        /// Partially update an existing employee using JsonPatchDocument
+        /// </summary>
+        /// <param name="id">Id of the employee to partially update</param>
+        /// <param name="patchDocument">A JsonPatchDocument object which updates an UpdateEmployeeViewModel property</param>
+        /// <returns>IActionResult</returns>
         [HttpPatch("{id}")]
         public IActionResult PartiallyUpdateEmployee(int id, JsonPatchDocument<UpdateEmployeeViewModel> patchDocument)
         {
@@ -207,6 +228,11 @@ namespace SeaWolf.HR.Controllers.Api
             }
         }
 
+        /// <summary>
+        /// Delete an employee from the database
+        /// </summary>
+        /// <param name="id">Id of the employee to delete</param>
+        /// <returns>IActionResult</returns>
         [HttpDelete("{id}")]
         public IActionResult DeleteEmployee(int id)
         {
