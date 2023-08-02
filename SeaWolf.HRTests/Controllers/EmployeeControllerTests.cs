@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using SeaWolf.HR.Controllers.Api;
 using SeaWolf.HR.Models;
+using SeaWolf.HR.ViewModels;
 using SeaWolf.HRTests.Mocks;
 using System.Security.Claims;
 using System.Security.Principal;
@@ -51,6 +52,32 @@ namespace SeaWolf.HR.Controllers
 
             Assert.IsType<OkObjectResult>(actionResult);
             Assert.Equal("Bob", value.FirstName);
+        }
+
+        [Fact]
+        public void GetEmployeeDetails_Returns_NotFound_On_Invalid_Id()
+        {
+            var actionResult = _controller.GetEmployeeDetails(99);
+
+            Assert.IsType<NotFoundResult>(actionResult);
+        }
+
+        [Fact]
+        public void AddEmployee_Returns_EmployeeActionResult()
+        {
+            var newEmployee = new AddEmployeeViewModel()
+            {
+                FirstName = "New",
+                LastName = "Employee",
+                DateOfBirth = new DateTime(1999, 01, 01),
+                Email = "nemployee@email.com",
+                Phone = "1234567895",
+                Position = "Tester",
+                Location = "Farrington Store"
+            };
+            var actionResult = _controller.AddEmployee(newEmployee);
+
+            Assert.IsAssignableFrom<ActionResult<Employee>>(actionResult);
         }
     }
 }
