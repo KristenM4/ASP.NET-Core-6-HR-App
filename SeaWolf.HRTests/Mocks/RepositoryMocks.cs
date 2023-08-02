@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
 using SeaWolf.HR.Models;
+using System.Numerics;
 
 namespace SeaWolf.HRTests.Mocks
 {
@@ -26,6 +27,9 @@ namespace SeaWolf.HRTests.Mocks
                     DateOfBirth=new DateTime(1964, 07, 23), Email="fraffel@email.com", Phone="1234567894",
                 Position="Cleaner"}
             };
+            var newEmployee = new Employee() { FirstName = "New", LastName = "Employee",
+                DateOfBirth = new DateTime(1999, 01, 01), Email = "nemployee@email.com", Phone = "1234567895",
+                Position = "Tester" };
 
             var mockEmployeeRepository = new Mock<IEmployeeRepository>();
             mockEmployeeRepository.Setup(repo => repo.AllEmployees).Returns(employees);
@@ -36,6 +40,8 @@ namespace SeaWolf.HRTests.Mocks
             mockEmployeeRepository.Setup(repo => repo.GetEmployeeById(1)).Returns(employees[0]);
             mockEmployeeRepository.Setup(repo => repo.SearchEmployees("Salesperson"))
                 .Returns(employees.Where(e => e.Position == "Salesperson"));
+            mockEmployeeRepository.Setup(repo => repo.AddEmployee(newEmployee));
+            mockEmployeeRepository.Setup(repo => repo.Save()).Returns(true);
             return mockEmployeeRepository;
         }
 
@@ -72,6 +78,8 @@ namespace SeaWolf.HRTests.Mocks
                 .Returns(locations.FirstOrDefault(e => e.LocationId == 99));
             // valid id
             mockLocationRepository.Setup(repo => repo.GetLocationById(1, false)).Returns(locations[0]);
+            mockLocationRepository.Setup(repo => repo.GetLocationByName(It.IsAny<string>(), false))
+                .Returns(locations[0]);
             mockLocationRepository.Setup(repo => repo.SearchLocations("Waianae"))
                 .Returns(locations.Where(e => e.City == "Waianae"));
             return mockLocationRepository;
