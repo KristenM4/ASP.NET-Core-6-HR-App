@@ -63,7 +63,7 @@ namespace SeaWolf.HR.Controllers
         }
 
         [Fact]
-        public void AddEmployee_Returns_EmployeeActionResult()
+        public void AddEmployee_Returns_CreatedAtRouteResult()
         {
             var newEmployee = new AddEmployeeViewModel()
             {
@@ -75,9 +75,10 @@ namespace SeaWolf.HR.Controllers
                 Position = "Tester",
                 Location = "Farrington Store"
             };
-            var actionResult = _controller.AddEmployee(newEmployee);
+            var result = _controller.AddEmployee(newEmployee);
 
-            Assert.IsAssignableFrom<ActionResult<Employee>>(actionResult);
+            var actionResult = Assert.IsAssignableFrom<ActionResult<Employee>>(result);
+            Assert.IsType<CreatedAtRouteResult>(actionResult.Result);
         }
     }
 }
