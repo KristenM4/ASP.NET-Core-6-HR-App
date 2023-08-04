@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
@@ -82,6 +83,38 @@ namespace SeaWolf.HR.Controllers
 
             var actionResult = Assert.IsAssignableFrom<ActionResult<Location>>(result);
             Assert.IsType<CreatedAtRouteResult>(actionResult.Result);
+        }
+
+        [Fact]
+        public void UpdateLocation_Changes_Location_Details()
+        {
+            var updatedLocationInfo = new UpdateLocationViewModel()
+            {
+                LocationName = "Updated Location",
+                Phone = "12343412341",
+                AddressLine1 = "123 Test Street",
+                City = "Testville",
+                State = "Testxas",
+                PostalCode = "54321",
+                Country = "United States of Tests"
+            };
+            var result = _controller.UpdateLocation(1, updatedLocationInfo);
+            var location = _mockLocationRepository.Object.GetLocationById(1);
+
+            Assert.IsType<NoContentResult>(result);
+            Assert.Equal("Updated Location", location.LocationName);
+        }
+
+        [Fact]
+        public void PartiallyUpdateLocation_Changes_Some_Location_Details()
+        {
+            var jsonPatch = new JsonPatchDocument<UpdateLocationViewModel>();
+            jsonPatch.Replace(l => l.LocationName, "patchName");
+            var result = _controller.PartiallyUpdateLocation(1, jsonPatch);
+            var location = _mockLocationRepository.Object.GetLocationById(1);
+
+            Assert.IsType<NoContentResult>(result);
+            Assert.Equal("patchName", location.LocationName);
         }
     }
 }
