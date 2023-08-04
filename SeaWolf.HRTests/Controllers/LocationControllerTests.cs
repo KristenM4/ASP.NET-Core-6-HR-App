@@ -55,5 +55,13 @@ namespace SeaWolf.HR.Controllers
             Assert.IsType<OkObjectResult>(actionResult);
             Assert.Equal("Farrington Store", value.LocationName);
         }
+
+        [Fact]
+        public void GetLocationDetails_Returns_NotFound_On_Invalid_Id()
+        {
+            var actionResult = _controller.GetLocationDetails(99);
+
+            Assert.IsType<NotFoundResult>(actionResult);
+        }
     }
 }
