@@ -116,5 +116,13 @@ namespace SeaWolf.HR.Controllers
             Assert.IsType<NoContentResult>(result);
             Assert.Equal("patchName", location.LocationName);
         }
+
+        [Fact]
+        public void DeleteLocation_Returns_NoContent()
+        {
+            var result = _controller.DeleteLocation(1);
+
+            Assert.IsType<NoContentResult>(result);
+        }
     }
 }
