@@ -190,8 +190,6 @@ namespace SeaWolf.HR.Controllers.Api
 
                 if (!ModelState.IsValid) return BadRequest(ModelState);
 
-                if (!TryValidateModel(locationToPatch)) return BadRequest(ModelState);
-
                 // apply changes if it passes all validation checks
                 if (locationToPatch.AddressLine2 == null) locationToPatch.AddressLine2 = string.Empty;
 
