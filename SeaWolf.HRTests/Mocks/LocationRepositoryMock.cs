@@ -55,6 +55,7 @@ namespace SeaWolf.HRTests.Mocks
             mockLocationRepository.Setup(repo => repo.SearchLocations("Waianae"))
                 .Returns(locations.Where(e => e.City == "Waianae"));
             mockLocationRepository.Setup(repo => repo.AddLocation(newLocation));
+            mockLocationRepository.Setup(repo => repo.DeleteLocation(1));
             mockLocationRepository.Setup(repo => repo.Save()).Returns(true);
             return mockLocationRepository;
         }
