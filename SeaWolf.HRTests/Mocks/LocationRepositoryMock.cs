@@ -32,6 +32,16 @@ namespace SeaWolf.HRTests.Mocks
                         Country = "US"
                     }
             };
+            var newLocation = new Location()
+            {
+                LocationName = "Test Location",
+                Phone = "12343412341",
+                AddressLine1 = "123 Test Street",
+                City = "Testville",
+                State = "Testxas",
+                PostalCode = "54321",
+                Country = "United States of Tests"
+            };
 
             var mockLocationRepository = new Mock<ILocationRepository>();
             mockLocationRepository.Setup(repo => repo.AllLocations).Returns(locations);
@@ -44,6 +54,8 @@ namespace SeaWolf.HRTests.Mocks
                 .Returns(locations[0]);
             mockLocationRepository.Setup(repo => repo.SearchLocations("Waianae"))
                 .Returns(locations.Where(e => e.City == "Waianae"));
+            mockLocationRepository.Setup(repo => repo.AddLocation(newLocation));
+            mockLocationRepository.Setup(repo => repo.Save()).Returns(true);
             return mockLocationRepository;
         }
     }
