@@ -225,10 +225,6 @@ namespace SeaWolf.HR.Controllers.Api
                     return BadRequest(ModelState);
                 }
 
-                if (!TryValidateModel(employeeToPatch))
-                {
-                    return BadRequest(ModelState);
-                }
 
                 var employeeToPatchLocation = _locationRepository.GetLocationByName(employeeToPatch.Location);
                 if (employeeToPatchLocation == null) return NotFound();
