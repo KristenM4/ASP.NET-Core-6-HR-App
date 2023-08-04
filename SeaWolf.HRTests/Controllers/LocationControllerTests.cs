@@ -63,5 +63,25 @@ namespace SeaWolf.HR.Controllers
 
             Assert.IsType<NotFoundResult>(actionResult);
         }
+
+        [Fact]
+        public void AddLocation_Returns_CreatedAtRouteResult()
+        {
+            var newLocation = new AddLocationViewModel()
+            {
+                LocationName = "Test Location",
+                Phone = "12343412341",
+                AddressLine1 = "123 Test Street",
+                City = "Testville",
+                State = "Testxas",
+                PostalCode = "54321",
+                Country = "United States of Tests"
+            };
+
+            var result = _controller.AddLocation(newLocation);
+
+            var actionResult = Assert.IsAssignableFrom<ActionResult<Location>>(result);
+            Assert.IsType<CreatedAtRouteResult>(actionResult.Result);
+        }
     }
 }
