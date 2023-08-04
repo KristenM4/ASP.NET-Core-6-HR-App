@@ -112,5 +112,13 @@ namespace SeaWolf.HR.Controllers
 
             Assert.IsType<NoContentResult>(result);
         }
+
+        [Fact]
+        public void DeleteEmployee_Returns_NoContent()
+        {
+            var result = _controller.DeleteEmployee(1);
+
+            Assert.IsType<NoContentResult>(result);
+        }
     }
 }

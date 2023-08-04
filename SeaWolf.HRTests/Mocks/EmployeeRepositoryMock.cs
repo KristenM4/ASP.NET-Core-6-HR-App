@@ -48,6 +48,7 @@ namespace SeaWolf.HR.Mocks
             mockEmployeeRepository.Setup(repo => repo.SearchEmployees("Salesperson"))
                 .Returns(employees.Where(e => e.Position == "Salesperson"));
             mockEmployeeRepository.Setup(repo => repo.AddEmployee(newEmployee));
+            mockEmployeeRepository.Setup(repo => repo.DeleteEmployee(1));
             mockEmployeeRepository.Setup(repo => repo.Save()).Returns(true);
             return mockEmployeeRepository;
         }
