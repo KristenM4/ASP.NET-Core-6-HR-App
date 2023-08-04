@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Moq;
 using SeaWolf.HR.Controllers.Api;
+using SeaWolf.HR.Mocks;
 using SeaWolf.HR.Models;
 using SeaWolf.HRTests.Mocks;
 
@@ -14,7 +15,7 @@ namespace SeaWolf.HR.Controllers
 
         public SearchEmployeeControllerTests()
         {
-            _mockEmployeeRepository = RepositoryMocks.GetEmployeeRepository();
+            _mockEmployeeRepository = EmployeeRepositoryMock.GetEmployeeRepository();
             _controller = new SearchEmployeeController(_mockEmployeeRepository.Object, Mock.Of<ILogger<SearchEmployeeController>>());
         }
 

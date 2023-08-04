@@ -14,7 +14,7 @@ namespace SeaWolf.HR.Controllers
 
         public SearchLocationControllerTests()
         {
-            _mockLocationRepository = RepositoryMocks.GetLocationRepository();
+            _mockLocationRepository = LocationRepositoryMock.GetLocationRepository();
             _controller = new SearchLocationController(_mockLocationRepository.Object, Mock.Of<ILogger<SearchLocationController>>());
         }
 

@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Moq;
 using SeaWolf.HR.Controllers;
+using SeaWolf.HR.Mocks;
 using SeaWolf.HR.Models;
 using SeaWolf.HR.ViewModels;
 using SeaWolf.HRTests.Mocks;
@@ -17,8 +18,8 @@ namespace SeaWolf.HRTests.Controllers
         public AppControllerTests()
         {
             // arrange
-            _mockEmployeeRepository = RepositoryMocks.GetEmployeeRepository();
-            _mockLocationRepository = RepositoryMocks.GetLocationRepository();
+            _mockEmployeeRepository = EmployeeRepositoryMock.GetEmployeeRepository();
+            _mockLocationRepository = LocationRepositoryMock.GetLocationRepository();
             _appController = new AppController(_mockEmployeeRepository.Object,
                 _mockLocationRepository.Object, Mock.Of<ILogger<AppController>>());
         }
