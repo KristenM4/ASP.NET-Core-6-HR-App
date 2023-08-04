@@ -109,8 +109,10 @@ namespace SeaWolf.HR.Controllers
             var jsonPatch = new JsonPatchDocument<UpdateEmployeeViewModel>();
             jsonPatch.Replace(e => e.LastName, "patchName");
             var result = _controller.PartiallyUpdateEmployee(1, jsonPatch);
+            var employee = _mockEmployeeRepository.Object.GetEmployeeById(1);
 
             Assert.IsType<NoContentResult>(result);
+            Assert.Equal("patchName", employee.LastName);
         }
 
         [Fact]
