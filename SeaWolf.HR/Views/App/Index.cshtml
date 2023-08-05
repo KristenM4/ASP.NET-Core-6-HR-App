@@ -1,7 +1,47 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewBag.Title = "Home";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
+</div>
+<div class="container mx-auto my-3">
+    <div class="row">
+        <div class="col-md-5 offset-md-1">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <h6 class="display-6">Hello, @User.Identity.Name</h6>
+                <a class="link link-primary link-underline-primary" asp-area="" asp-controller="Account" asp-action="Logout">Log Out</a>
+            }
+            else
+            {
+                <h6 class="display-6">You are not logged in</h6>
+                <a class="link link-primary link-underline-primary" asp-area="" asp-controller="Account" asp-action="Login">Log In</a>
+            }
+        </div>
+        <div class="col-md-5 offset-md-1 p-3">
+            <h6 class="display-6">API Documentation</h6>
+            <a class="link link-primary" href="swagger">Swagger Docs</a>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="row">
+        <div class="col-md-8 offset-md-1 my-2">
+            <h6 class="display-6">Employee Information</h6>
+            <a class="link link-primary" asp-controller="App" asp-action="EmployeeList">View All Employees</a>
+            <br />
+            <a class="link link-primary" asp-controller="App" asp-action="AddEmployee">Register New Employee</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 offset-md-1 my-2">
+            <h6 class="display-6">Location Information</h6>
+            <a class="link link-primary" asp-controller="App" asp-action="LocationList">View All Locations</a>
+            <br />
+            <a class="link link-primary" asp-controller="App" asp-action="AddLocation">Register New Location</a>
+        </div>
+    </div>
 </div>
