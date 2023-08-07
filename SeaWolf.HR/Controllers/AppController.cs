@@ -272,17 +272,7 @@ namespace SeaWolf.HR.Controllers
             {
                 if (model.AddressLine2 == null) model.AddressLine2 = string.Empty;
 
-                var newLocation = new Location()
-                {
-                    LocationName = model.LocationName,
-                    Phone = model.Phone,
-                    AddressLine1 = model.AddressLine1,
-                    AddressLine2 = model.AddressLine2,
-                    City = model.City,
-                    State = model.State,
-                    PostalCode = model.PostalCode,
-                    Country = model.Country
-                };
+                var newLocation = _mapper.Map<Location>(model);
 
                 _locationRepository.AddLocation(newLocation);
 
@@ -336,14 +326,7 @@ namespace SeaWolf.HR.Controllers
                 {
                     if (model.AddressLine2 == null) model.AddressLine2 = string.Empty;
 
-                    location.LocationName = model.LocationName;
-                    location.Phone = model.Phone;
-                    location.AddressLine1 = model.AddressLine1;
-                    location.AddressLine2 = model.AddressLine2;
-                    location.City = model.City;
-                    location.State = model.State;
-                    location.PostalCode = model.PostalCode;
-                    location.Country = model.Country;
+                    _mapper.Map(model, location);
 
 
                     if (_locationRepository.Save())
