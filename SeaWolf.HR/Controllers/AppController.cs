@@ -100,17 +100,8 @@ namespace SeaWolf.HR.Controllers
             {
                 var modelLocation = _locationRepository.GetLocationByName(model.Location);
 
-                var newEmployee = new Employee()
-                {
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    MiddleName = model.MiddleName,
-                    DateOfBirth = model.DateOfBirth,
-                    Email = model.Email,
-                    Phone = model.Phone,
-                    Position = model.Position,
-                    Location = modelLocation,
-                };
+                var newEmployee = _mapper.Map<Employee>(model);
+                newEmployee.Location = modelLocation;
 
                 _employeeRepository.AddEmployee(newEmployee);
 
@@ -173,13 +164,7 @@ namespace SeaWolf.HR.Controllers
                 {
                     var modelLocation = _locationRepository.GetLocationByName(model.Location);
 
-                    employee.FirstName = model.FirstName;
-                    employee.LastName = model.LastName;
-                    employee.MiddleName = model.MiddleName;
-                    employee.DateOfBirth = model.DateOfBirth;
-                    employee.Email = model.Email;
-                    employee.Phone = model.Phone;
-                    employee.Position = model.Position;
+                    _mapper.Map(model, employee);
                     employee.Location = modelLocation;
 
 
