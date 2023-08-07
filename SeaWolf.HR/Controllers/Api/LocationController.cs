@@ -222,11 +222,10 @@ namespace SeaWolf.HR.Controllers.Api
         {
             try
             {
-                var location = _locationRepository.GetLocationById(id);
+                var location = _locationRepository.GetLocationById(id, true);
                 if (location == null) return NotFound();
 
-                var employeesForLocation = _employeeRepository.GetEmployeesForLocation(id);
-                if (employeesForLocation.Count() > 0)
+                if (location.Employees != null && location.Employees.Count > 0)
                 {
                     return BadRequest("Locations with employees may not be deleted. Delete or reassign this location's employees to another location.");
                 }
