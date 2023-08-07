@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using SeaWolf.HR.Controllers;
+using SeaWolf.HR.Controllers.Api;
 using SeaWolf.HR.Mocks;
 using SeaWolf.HR.Models;
+using SeaWolf.HR.Profiles;
 using SeaWolf.HR.ViewModels;
 using SeaWolf.HRTests.Mocks;
 
@@ -17,11 +20,19 @@ namespace SeaWolf.HRTests.Controllers
 
         public AppControllerTests()
         {
-            // arrange
             _mockEmployeeRepository = EmployeeRepositoryMock.GetEmployeeRepository();
             _mockLocationRepository = LocationRepositoryMock.GetLocationRepository();
+
+            var mockMapper = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new LocationProfile());
+            });
+            var mapper = mockMapper.CreateMapper();
+
             _appController = new AppController(_mockEmployeeRepository.Object,
-                _mockLocationRepository.Object, Mock.Of<ILogger<AppController>>());
+                _mockLocationRepository.Object,
+                Mock.Of<ILogger<AppController>>(),
+                mapper);
         }
 
         [Fact]
