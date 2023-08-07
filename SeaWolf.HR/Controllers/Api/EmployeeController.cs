@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -17,12 +18,17 @@ namespace SeaWolf.HR.Controllers.Api
         private readonly IEmployeeRepository _employeeRepository;
         private readonly ILocationRepository _locationRepository;
         private readonly ILogger<EmployeeController> _logger;
+        private readonly IMapper _mapper;
 
-        public EmployeeController(IEmployeeRepository employeeRepository, ILocationRepository locationRepository, ILogger<EmployeeController> logger)
+        public EmployeeController(IEmployeeRepository employeeRepository,
+            ILocationRepository locationRepository,
+            ILogger<EmployeeController> logger,
+            IMapper mapper)
         {
             _employeeRepository = employeeRepository;
             _locationRepository = locationRepository;
             _logger = logger;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -101,17 +107,8 @@ namespace SeaWolf.HR.Controllers.Api
                     var modelLocation = _locationRepository.GetLocationByName(model.Location);
                     if (modelLocation == null) return BadRequest();
 
-                    var newEmployee = new Employee()
-                    {
-                        FirstName = model.FirstName,
-                        LastName = model.LastName,
-                        MiddleName = model.MiddleName,
-                        DateOfBirth = model.DateOfBirth,
-                        Email = model.Email,
-                        Phone = model.Phone,
-                        Position = model.Position,
-                        Location = modelLocation,
-                    };
+                    var newEmployee = _mapper.Map<Employee>(model);
+                    newEmployee.Location = modelLocation;
 
                     _employeeRepository.AddEmployee(newEmployee);
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -6,6 +7,7 @@ using Moq;
 using SeaWolf.HR.Controllers.Api;
 using SeaWolf.HR.Mocks;
 using SeaWolf.HR.Models;
+using SeaWolf.HR.Profiles;
 using SeaWolf.HR.ViewModels;
 using SeaWolf.HRTests.Mocks;
 using System.Security.Claims;
@@ -23,8 +25,17 @@ namespace SeaWolf.HR.Controllers
         {
             _mockEmployeeRepository = EmployeeRepositoryMock.GetEmployeeRepository();
             _mockLocationRepository = LocationRepositoryMock.GetLocationRepository();
-            
-            _controller = new EmployeeController(_mockEmployeeRepository.Object, _mockLocationRepository.Object, Mock.Of<ILogger<EmployeeController>>());
+
+            var mockMapper = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new EmployeeProfile());
+            });
+            var mapper = mockMapper.CreateMapper();
+
+            _controller = new EmployeeController(_mockEmployeeRepository.Object,
+                _mockLocationRepository.Object,
+                Mock.Of<ILogger<EmployeeController>>(),
+                mapper);
 
             // create tester identity to pass identity checks in controller
             var identity = new GenericIdentity("tester");
