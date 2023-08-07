@@ -154,13 +154,7 @@ namespace SeaWolf.HR.Controllers.Api
 
                 if (ModelState.IsValid)
                 {
-                    employee.FirstName = model.FirstName;
-                    employee.LastName = model.LastName;
-                    employee.MiddleName = model.MiddleName;
-                    employee.DateOfBirth = model.DateOfBirth;
-                    employee.Email = model.Email;
-                    employee.Phone = model.Phone;
-                    employee.Position = model.Position;
+                    _mapper.Map(model, employee);
                     employee.Location = modelLocation;
 
                     if (_employeeRepository.Save())
@@ -203,38 +197,19 @@ namespace SeaWolf.HR.Controllers.Api
                 if (employeeInDB == null) return NotFound();
 
                 // map Employee to UpdateEmployeeViewModel
-                var employeeToPatch = new UpdateEmployeeViewModel()
-                {
-                    FirstName = employeeInDB.FirstName,
-                    LastName = employeeInDB.LastName,
-                    MiddleName = employeeInDB.MiddleName,
-                    DateOfBirth = employeeInDB.DateOfBirth,
-                    Email = employeeInDB.Email,
-                    Phone = employeeInDB.Phone,
-                    Position = employeeInDB.Position,
-                    Location = employeeInDB.Location.LocationName
-                };
+                var employeeToPatch = _mapper.Map<UpdateEmployeeViewModel>(employeeInDB);
+                employeeToPatch.Location = employeeInDB.Location.LocationName;
 
                 patchDocument.ApplyTo(employeeToPatch, ModelState);
 
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
-
+                if (!ModelState.IsValid) return BadRequest(ModelState);
 
                 var employeeToPatchLocation = _locationRepository.GetLocationByName(employeeToPatch.Location);
                 if (employeeToPatchLocation == null) return NotFound();
 
                 // apply changes if it passes all validation checks
 
-                employeeInDB.FirstName = employeeToPatch.FirstName;
-                employeeInDB.LastName = employeeToPatch.LastName;
-                employeeInDB.MiddleName = employeeToPatch.MiddleName;
-                employeeInDB.DateOfBirth = employeeToPatch.DateOfBirth;
-                employeeInDB.Email = employeeToPatch.Email;
-                employeeInDB.Phone = employeeToPatch.Phone;
-                employeeInDB.Position = employeeToPatch.Position;
+                _mapper.Map(employeeToPatch, employeeInDB);
                 employeeInDB.Location = employeeToPatchLocation;
 
                 _logger.LogInformation($"Details of employee id {id} partially updated(HTTP Patch) by {userName}");
