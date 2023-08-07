@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Moq;
+﻿using Moq;
 using SeaWolf.HR.Models;
-using System.Numerics;
 
 namespace SeaWolf.HRTests.Mocks
 {
@@ -19,8 +17,10 @@ namespace SeaWolf.HRTests.Mocks
                         City = "Waianae",
                         State = "Hawaii",
                         PostalCode = "96792",
-                        Country = "US"
-                    },
+                        Country = "US",
+                        Employees = new List<Employee>() { new Employee() {FirstName="Bob", LastName="Evans",
+                            DateOfBirth=new DateTime(1948, 05, 30), Email="bevans@email.com", Phone="1234567890" } }
+        },
                 new Location()
                     {
                         LocationName = "SeaWolf Warehouse",
@@ -29,7 +29,8 @@ namespace SeaWolf.HRTests.Mocks
                         City = "Waipahu",
                         State = "Hawaii",
                         PostalCode = "96797",
-                        Country = "US"
+                        Country = "US",
+                        Employees = null
                     }
             };
             var newLocation = new Location()
@@ -51,13 +52,16 @@ namespace SeaWolf.HRTests.Mocks
             // valid id
             mockLocationRepository.Setup(repo => repo.GetLocationById(1, false)).Returns(locations[0]);
             mockLocationRepository.Setup(repo => repo.GetLocationById(1, true)).Returns(locations[0]);
+            mockLocationRepository.Setup(repo => repo.GetLocationById(2, true)).Returns(locations[1]);
 
             mockLocationRepository.Setup(repo => repo.GetLocationByName(It.IsAny<string>(), false))
                 .Returns(locations[0]);
             mockLocationRepository.Setup(repo => repo.SearchLocations("Waianae"))
                 .Returns(locations.Where(e => e.City == "Waianae"));
             mockLocationRepository.Setup(repo => repo.AddLocation(newLocation));
+
             mockLocationRepository.Setup(repo => repo.DeleteLocation(1));
+            mockLocationRepository.Setup(repo => repo.DeleteLocation(0));
             mockLocationRepository.Setup(repo => repo.Save()).Returns(true);
             return mockLocationRepository;
         }
