@@ -4,7 +4,6 @@ namespace SeaWolf.HR.ViewModels
 {
     public class UpdateEmployeeViewModel
     {
-        public int EmployeeId { get; set; }
 
         [Required(ErrorMessage = "First name is required")]
         public string FirstName { get; set; }
