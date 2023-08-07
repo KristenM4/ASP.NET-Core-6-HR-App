@@ -9,6 +9,7 @@ using SeaWolf.HR.Models;
 using SeaWolf.HR.Profiles;
 using SeaWolf.HR.ViewModels;
 using SeaWolf.HRTests.Mocks;
+using Xunit.Sdk;
 
 namespace SeaWolf.HR.Controllers
 {
@@ -118,9 +119,19 @@ namespace SeaWolf.HR.Controllers
         }
 
         [Fact]
-        public void DeleteLocation_Returns_NoContent()
+        public void DeleteLocation_With_Employees_Returns_BadRequest()
         {
             var result = _controller.DeleteLocation(1);
+            string errorMessage = "Locations with employees may not be deleted. Delete or reassign this location's employees to another location.";
+
+            var badRequest = Assert.IsType<BadRequestObjectResult>(result);
+            Assert.Equal(badRequest.Value, errorMessage);
+        }
+
+        [Fact]
+        public void DeleteLocation_Returns_NoContent()
+        {
+            var result = _controller.DeleteLocation(2);
 
             Assert.IsType<NoContentResult>(result);
         }
