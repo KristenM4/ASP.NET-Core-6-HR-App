@@ -91,6 +91,7 @@ namespace SeaWolf.HR.Models
             {
                 var farringtonStore = context.Locations.FirstOrDefault(l => l.LocationName == "Farrington Store");
                 var seawolfwarehouse = context.Locations.FirstOrDefault(l => l.LocationName == "SeaWolf Warehouse");
+                var seawolfHQ = context.Locations.FirstOrDefault(l => l.LocationName == "SeaWolf HQ");
 
                 context.AddRange(
                 new Employee()
@@ -233,6 +234,47 @@ namespace SeaWolf.HR.Models
                     Phone = "1234567812",
                     Position = "Warehouse Operative",
                     Location = seawolfwarehouse
+                },
+                new Employee()
+                {
+                    FirstName = "Philippa",
+                    LastName = "Colwyn",
+                    DateOfBirth = new DateTime(1957, 05, 20),
+                    Email = "pcolwyn@email.com",
+                    Phone = "1234567813",
+                    Position = "Chief Executive Officer",
+                    Location = seawolfHQ
+                },
+                new Employee()
+                {
+                    FirstName = "Jackson",
+                    MiddleName = "Roberts",
+                    LastName = "Nicolao",
+                    DateOfBirth = new DateTime(1961, 08, 02),
+                    Email = "jnicolao@email.com",
+                    Phone = "1234567814",
+                    Position = "Chief Financial Officer",
+                    Location = seawolfHQ
+                },
+                new Employee()
+                {
+                    FirstName = "Hugo",
+                    LastName = "Vlado",
+                    DateOfBirth = new DateTime(1979, 03, 27),
+                    Email = "hvlado@email.com",
+                    Phone = "1234567815",
+                    Position = "Chief Operating Officer",
+                    Location = seawolfHQ
+                },
+                new Employee()
+                {
+                    FirstName = "Evelyn",
+                    LastName = "Bud",
+                    DateOfBirth = new DateTime(1974, 10, 25),
+                    Email = "ebud@email.com",
+                    Phone = "1234567816",
+                    Position = "Chief Marketing Officer",
+                    Location = seawolfHQ
                 }
                 );
             }
