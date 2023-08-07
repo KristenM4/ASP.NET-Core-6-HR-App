@@ -10,7 +10,9 @@ namespace SeaWolf.HR.Profiles
         {
             CreateMap<AddEmployeeViewModel, Employee>()
                 .ForMember(dest => dest.Location, act => act.Ignore());
-            CreateMap<UpdateEmployeeViewModel, Employee>().ReverseMap()
+            CreateMap<UpdateEmployeeViewModel, Employee>()
+                .ForMember(dest => dest.Location, act => act.Ignore());
+            CreateMap<Employee, UpdateEmployeeViewModel>()
                 .ForMember(dest => dest.Location, act => act.Ignore());
         }
     }
