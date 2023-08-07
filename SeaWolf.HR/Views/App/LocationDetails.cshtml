@@ -40,21 +40,32 @@
 
     <div class="col-md-6 my-3">
         <h3>Location Staff</h3>
-        @foreach (var employee in ViewBag.Employees)
+        @if (Model.Employees != null && Model.Employees.Count > 0) {
+            @foreach (var employee in Model.Employees)
+            {
+                <div class="border-bottom border-secondary">
+                    <p class="mt-2">
+                        <a class="link-dark text-decoration-none" asp-controller="App" asp-action="EmployeeDetails" asp-route-id="@employee.EmployeeId">
+                            @employee.Position - @employee.FirstName @employee.LastName
+                        </a>
+                    </p>
+                </div>
+            }
+        }
+        else
         {
             <div class="border-bottom border-secondary">
                 <p class="mt-2">
-                    <a class="link-dark text-decoration-none" asp-controller="App" asp-action="EmployeeDetails" asp-route-id="@employee.EmployeeId">
-                        @employee.Position - @employee.FirstName @employee.LastName
-                    </a>
+                    This Location has no registered employees.
                 </p>
             </div>
         }
+
     </div>
 
     <div id="delete-toggle" class="text-danger mt-2">Delete Location</div>
     <div class="SW-delete-data">
-        @if (ViewBag.Employees.Count == 0)
+        @if (Model.Employees == null || Model.Employees.Count == 0)
         {
             <p>Are you sure you want to delete this location? This action will <b>permanently</b> remove this location's data from the database.</p>
             <a asp-action="DeleteLocation" asp-controller="App" asp-route-id="@Model.LocationId" class="btn btn-danger">

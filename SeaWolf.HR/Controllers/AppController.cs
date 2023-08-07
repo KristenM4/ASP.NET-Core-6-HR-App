@@ -230,12 +230,11 @@ namespace SeaWolf.HR.Controllers
         {
             try
             {
-                var location = _locationRepository.GetLocationById(id);
+                var location = _locationRepository.GetLocationById(id, true);
                 if (location == null)
                 {
                     return NotFound();
                 }
-                ViewBag.Employees = _employeeRepository.GetEmployeesForLocation(id);
                 return View(location);
             }
             catch (Exception ex)
