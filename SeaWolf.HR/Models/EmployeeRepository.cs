@@ -34,11 +34,6 @@ namespace SeaWolf.HR.Models
             return _context.Employees.Include(e => e.Location).FirstOrDefault(e => e.EmployeeId == employeeId);
         }
 
-        public IEnumerable<Employee> GetEmployeesForLocation(int locationId)
-        {
-            return _context.Employees.Where(e => e.Location.LocationId == locationId).ToList();
-        }
-
         public bool Save()
         {
             return _context.SaveChanges() > 0;
