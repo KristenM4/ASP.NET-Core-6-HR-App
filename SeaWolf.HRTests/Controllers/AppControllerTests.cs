@@ -25,6 +25,7 @@ namespace SeaWolf.HRTests.Controllers
             var mockMapper = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new LocationProfile());
+                cfg.AddProfile(new EmployeeProfile());
             });
             var mapper = mockMapper.CreateMapper();
 
@@ -78,6 +79,44 @@ namespace SeaWolf.HRTests.Controllers
 
             // assert
             Assert.IsType<NotFoundResult>(result);
+        }
+
+        [Fact]
+        public void AddEmployee_Get_Uses_Returns_ViewResult()
+        {
+            var result = _appController.AddEmployee();
+
+            Assert.IsType<ViewResult>(result);
+        }
+
+        [Fact]
+        public void AddEmployee_Post_Returns_View_On_Invalid_Model()
+        {
+            var newEmployeeViewModel = new AddEmployeeViewModel();
+            _appController.ModelState.AddModelError("FirstName", "Required");
+
+            var result = _appController.AddEmployee(newEmployeeViewModel);
+
+            var viewResult = Assert.IsType<ViewResult>(result);
+            Assert.False(viewResult.ViewData.ModelState.IsValid);
+        }
+
+        [Fact]
+        public void AddEmployee_Post_Returns_Redirect_On_Valid_Model()
+        {
+            var newEmployeeViewModel = new AddEmployeeViewModel() {
+                FirstName = "New",
+                LastName = "Employee",
+                DateOfBirth = new DateTime(1999, 01, 01),
+                Email = "nemployee@email.com",
+                Phone = "1234567895",
+                Position = "Tester",
+                Location = "Farrington Store"};
+
+            var result = _appController.AddEmployee(newEmployeeViewModel);
+
+            var redirectResult = Assert.IsType<RedirectToActionResult>(result);
+            Assert.Equal("EmployeeDetails", redirectResult.ActionName);
         }
 
         [Fact]
