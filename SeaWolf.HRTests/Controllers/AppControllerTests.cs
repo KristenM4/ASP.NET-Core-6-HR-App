@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Moq;
 using SeaWolf.HR.Controllers;
-using SeaWolf.HR.Controllers.Api;
 using SeaWolf.HR.Mocks;
 using SeaWolf.HR.Models;
 using SeaWolf.HR.Profiles;
@@ -54,7 +53,7 @@ namespace SeaWolf.HRTests.Controllers
             // assert
             var viewResult = Assert.IsType<ViewResult>(result);
             var employeeListViewModel = Assert.IsAssignableFrom<EmployeeListViewModel>
-                (viewResult.ViewData.Model);
+                (viewResult.Model);
             Assert.Equal(5, employeeListViewModel.Employees.Count());
         }
 
@@ -66,7 +65,7 @@ namespace SeaWolf.HRTests.Controllers
 
             // assert
             var viewResult = Assert.IsType<ViewResult>(result);
-            var employeeModel = Assert.IsAssignableFrom<Employee>(viewResult.ViewData.Model);
+            var employeeModel = Assert.IsAssignableFrom<Employee>(viewResult.Model);
             Assert.Equal("Bob", employeeModel.FirstName);
         }
 
@@ -77,7 +76,7 @@ namespace SeaWolf.HRTests.Controllers
             var result = _appController.EmployeeDetails(99);
 
             // assert
-            var notFoundResult = Assert.IsType<NotFoundResult>(result);
+            Assert.IsType<NotFoundResult>(result);
         }
 
         [Fact]
@@ -89,7 +88,7 @@ namespace SeaWolf.HRTests.Controllers
             // assert
             var viewResult = Assert.IsType<ViewResult>(result);
             var locationListViewModel = Assert.IsAssignableFrom<LocationListViewModel>
-                (viewResult.ViewData.Model);
+                (viewResult.Model);
             Assert.Equal(2, locationListViewModel.Locations.Count());
         }
 
@@ -101,7 +100,7 @@ namespace SeaWolf.HRTests.Controllers
 
             // assert
             var viewResult = Assert.IsType<ViewResult>(result);
-            var locationModel = Assert.IsAssignableFrom<Location>(viewResult.ViewData.Model);
+            var locationModel = Assert.IsAssignableFrom<Location>(viewResult.Model);
             Assert.Equal("Farrington Store", locationModel.LocationName);
         }
 
@@ -112,7 +111,7 @@ namespace SeaWolf.HRTests.Controllers
             var result = _appController.LocationDetails(99);
 
             // assert
-            var notFoundResult = Assert.IsType<NotFoundResult>(result);
+            Assert.IsType<NotFoundResult>(result);
         }
     }
 }
