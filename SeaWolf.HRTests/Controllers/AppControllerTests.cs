@@ -55,6 +55,7 @@ namespace SeaWolf.HRTests.Controllers
             var employeeListViewModel = Assert.IsAssignableFrom<EmployeeListViewModel>
                 (viewResult.Model);
             Assert.Equal(5, employeeListViewModel.Employees.Count());
+            Assert.Equal("Bob", employeeListViewModel.Employees.First().FirstName);
         }
 
         [Fact]
@@ -90,6 +91,7 @@ namespace SeaWolf.HRTests.Controllers
             var locationListViewModel = Assert.IsAssignableFrom<LocationListViewModel>
                 (viewResult.Model);
             Assert.Equal(2, locationListViewModel.Locations.Count());
+            Assert.Equal("Farrington Store", locationListViewModel.Locations.First().LocationName);
         }
 
         [Fact]
