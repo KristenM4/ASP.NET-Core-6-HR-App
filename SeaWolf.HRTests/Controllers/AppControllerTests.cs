@@ -120,6 +120,46 @@ namespace SeaWolf.HRTests.Controllers
         }
 
         [Fact]
+        public void EditEmployee_Get_Uses_Returns_ViewResult()
+        {
+            var result = _appController.EditEmployee(1);
+
+            Assert.IsType<ViewResult>(result);
+        }
+
+        [Fact]
+        public void EditEmployee_Post_Returns_View_On_Invalid_Model()
+        {
+            var updatedEmployeeViewModel = new UpdateEmployeeViewModel();
+            _appController.ModelState.AddModelError("FirstName", "Required");
+
+            var result = _appController.EditEmployee(1, updatedEmployeeViewModel);
+
+            var viewResult = Assert.IsType<ViewResult>(result);
+            Assert.False(viewResult.ViewData.ModelState.IsValid);
+        }
+
+        [Fact]
+        public void EditEmployee_Post_Returns_Redirect_On_Valid_Model()
+        {
+            var updatedEmployeeViewModel = new UpdateEmployeeViewModel()
+            {
+                FirstName = "Bob",
+                LastName = "Evans",
+                DateOfBirth = new DateTime(1999, 01, 01),
+                Email = "bevans@email.com",
+                Phone = "1234567895",
+                Position = "Tester",
+                Location = "Farrington Store"
+            };
+
+            var result = _appController.EditEmployee(1, updatedEmployeeViewModel);
+
+            var redirectResult = Assert.IsType<RedirectToActionResult>(result);
+            Assert.Equal("EmployeeDetails", redirectResult.ActionName);
+        }
+
+        [Fact]
         public void LocationList_Returns_List_Of_Locations()
         {
             // act
