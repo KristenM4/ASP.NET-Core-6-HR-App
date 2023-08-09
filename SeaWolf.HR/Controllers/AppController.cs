@@ -199,7 +199,7 @@ namespace SeaWolf.HR.Controllers
                 return RedirectToAction("EmployeeList", "App");
             }
 
-            return BadRequest();
+            return BadRequest("Failed to delete employee.");
         }
 
         public IActionResult LocationList()
@@ -348,7 +348,7 @@ namespace SeaWolf.HR.Controllers
                 return RedirectToAction("LocationList", "App");
             }
 
-            return BadRequest();
+            return BadRequest("Failed to delete location.");
         }
     }
 }
