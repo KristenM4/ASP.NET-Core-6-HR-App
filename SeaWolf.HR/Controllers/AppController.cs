@@ -189,6 +189,9 @@ namespace SeaWolf.HR.Controllers
         [HttpGet]
         public IActionResult DeleteEmployee(int id)
         {
+            var employee = _employeeRepository.GetEmployeeById(id);
+            if (employee == null) return NotFound();
+
             _employeeRepository.DeleteEmployee(id);
 
             if (_employeeRepository.Save())
@@ -335,6 +338,9 @@ namespace SeaWolf.HR.Controllers
         [HttpGet]
         public IActionResult DeleteLocation(int id)
         {
+            var location = _locationRepository.GetLocationById(id);
+            if (location == null) return NotFound();
+
             _locationRepository.DeleteLocation(id);
 
             if (_locationRepository.Save())
