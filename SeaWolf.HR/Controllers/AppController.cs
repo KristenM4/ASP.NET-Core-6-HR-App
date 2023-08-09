@@ -338,8 +338,12 @@ namespace SeaWolf.HR.Controllers
         [HttpGet]
         public IActionResult DeleteLocation(int id)
         {
-            var location = _locationRepository.GetLocationById(id);
+            var location = _locationRepository.GetLocationById(id, true);
             if (location == null) return NotFound();
+            if (location.Employees != null && location.Employees.Count != 0)
+            {
+                return BadRequest("Locations with employees may not be deleted. Delete or reassign this location's employees to another location.");
+            }
 
             _locationRepository.DeleteLocation(id);
 
