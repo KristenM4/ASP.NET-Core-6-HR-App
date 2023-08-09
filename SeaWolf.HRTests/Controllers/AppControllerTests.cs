@@ -234,5 +234,45 @@ namespace SeaWolf.HRTests.Controllers
             var redirectResult = Assert.IsType<RedirectToActionResult>(result);
             Assert.Equal("LocationDetails", redirectResult.ActionName);
         }
+
+        [Fact]
+        public void EditLocation_Get_Uses_Returns_ViewResult()
+        {
+            var result = _appController.EditLocation(1);
+
+            Assert.IsType<ViewResult>(result);
+        }
+
+        [Fact]
+        public void EditLocation_Post_Returns_View_On_Invalid_Model()
+        {
+            var updatedLocationViewModel = new UpdateLocationViewModel();
+            _appController.ModelState.AddModelError("Postalcode", "Required");
+
+            var result = _appController.EditLocation(1, updatedLocationViewModel);
+
+            var viewResult = Assert.IsType<ViewResult>(result);
+            Assert.False(viewResult.ViewData.ModelState.IsValid);
+        }
+
+        [Fact]
+        public void EditLocation_Post_Returns_Redirect_On_Valid_Model()
+        {
+            var updatedLocationViewModel = new UpdateLocationViewModel()
+            {
+                LocationName = "Updated Location",
+                Phone = "12343412341",
+                AddressLine1 = "123 Test Street",
+                City = "Testville",
+                State = "Testxas",
+                PostalCode = "54321",
+                Country = "United States of Tests"
+            };
+
+            var result = _appController.EditLocation(1, updatedLocationViewModel);
+
+            var redirectResult = Assert.IsType<RedirectToActionResult>(result);
+            Assert.Equal("LocationDetails", redirectResult.ActionName);
+        }
     }
 }
