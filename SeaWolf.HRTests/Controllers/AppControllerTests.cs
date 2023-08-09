@@ -283,5 +283,24 @@ namespace SeaWolf.HRTests.Controllers
             var redirectResult = Assert.IsType<RedirectToActionResult>(result);
             Assert.Equal("LocationDetails", redirectResult.ActionName);
         }
+
+        [Fact]
+        public void DeleteLocation_With_Employees_Returns_BadRequest()
+        {
+            var result = _appController.DeleteLocation(1);
+            string errorMessage = "Locations with employees may not be deleted. Delete or reassign this location's employees to another location.";
+
+            var badRequest = Assert.IsType<BadRequestObjectResult>(result);
+            Assert.Equal(badRequest.Value, errorMessage);
+        }
+
+        [Fact]
+        public void DeleteLocation_Success_Returns_Redirect()
+        {
+            var result = _appController.DeleteLocation(2);
+
+            var redirectResult = Assert.IsType<RedirectToActionResult>(result);
+            Assert.Equal("LocationList", redirectResult.ActionName);
+        }
     }
 }
