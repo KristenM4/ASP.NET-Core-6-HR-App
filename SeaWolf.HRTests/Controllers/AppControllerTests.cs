@@ -160,6 +160,15 @@ namespace SeaWolf.HRTests.Controllers
         }
 
         [Fact]
+        public void DeleteEmployee_Success_Returns_Redirect()
+        {
+            var result = _appController.DeleteEmployee(1);
+
+            var redirectResult = Assert.IsType<RedirectToActionResult>(result);
+            Assert.Equal("EmployeeList", redirectResult.ActionName);
+        }
+
+        [Fact]
         public void LocationList_Returns_List_Of_Locations()
         {
             // act
