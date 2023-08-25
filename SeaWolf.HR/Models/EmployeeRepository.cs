@@ -66,5 +66,15 @@ namespace SeaWolf.HR.Models
             Include(e => e.Location).OrderBy(e => e.LastName).ThenBy(e => e.FirstName)
             .ToListAsync();
         }
+
+        public void AddEmployeeAsync(Employee employee)
+        {
+            _context.Employees.Add(employee);
+        }
+
+        public async Task SaveAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
     }
 }
