@@ -8,5 +8,7 @@
         void AddEmployee(Employee employee);
         void DeleteEmployee(int employeeId);
         bool Save();
+        Task<IEnumerable<Employee>> AllEmployeesAsync();
+        Task SaveAsync();
     }
 }
