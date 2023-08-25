@@ -210,5 +210,51 @@
         <member name="M:SeaWolf.HR.Migrations.AddIdentity.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="P:SeaWolf.HR.Models.EmployeeRepository.AllEmployees">
+            <summary>
+            Get all employees in the database
+            </summary>
+            <returns>IEnumerable of Employees</returns>
+        </member>
+        <member name="M:SeaWolf.HR.Models.EmployeeRepository.AddEmployee(SeaWolf.HR.Models.Employee)">
+            <summary>
+            Add a new employee to the database
+            </summary>
+        </member>
+        <member name="M:SeaWolf.HR.Models.EmployeeRepository.DeleteEmployee(System.Int32)">
+            <summary>
+            Delete an employee from the database
+            </summary>
+        </member>
+        <member name="M:SeaWolf.HR.Models.EmployeeRepository.GetEmployeeById(System.Int32)">
+            <summary>
+            Get a specific employee from the database
+            </summary>
+            <returns>An Employee object</returns>
+        </member>
+        <member name="M:SeaWolf.HR.Models.EmployeeRepository.Save">
+            <summary>
+            Save changes to the database
+            </summary>
+            <returns>True if any changes were saved, false if no changes were saved</returns>
+        </member>
+        <member name="M:SeaWolf.HR.Models.EmployeeRepository.SearchEmployees(System.String)">
+            <summary>
+            Keyword search and sort for employees
+            </summary>
+            <returns>IEnumerable of Employees</returns>
+        </member>
+        <member name="M:SeaWolf.HR.Models.EmployeeRepository.AllEmployeesAsync">
+            <summary>
+            Get all employees in the database. This is an async method.
+            </summary>
+            <returns>Async Task: IEnumerable of Employees</returns>
+        </member>
+        <member name="M:SeaWolf.HR.Models.EmployeeRepository.SaveAsync">
+            <summary>
+            Save changes to the database asynchronously
+            </summary>
+            <returns>Task with result of how many changes were saved</returns>
+        </member>
     </members>
 </doc>
