@@ -57,5 +57,14 @@ namespace SeaWolf.HR.Models
                     );
             }
         }
+
+        // ASYNC
+
+        public async Task<IEnumerable<Employee>> AllEmployeesAsync()
+        {
+            return await _context.Employees.
+            Include(e => e.Location).OrderBy(e => e.LastName).ThenBy(e => e.FirstName)
+            .ToListAsync();
+        }
     }
 }
