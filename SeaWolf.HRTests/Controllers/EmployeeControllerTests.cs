@@ -133,5 +133,16 @@ namespace SeaWolf.HR.Controllers
 
             Assert.IsType<NoContentResult>(result);
         }
+
+        [Fact]
+        public async Task GetAllEmployeesAsync_Returns_All_Employees()
+        {
+            var actionResult = await _controller.GetAllEmployeesAsync();
+
+            var result = Assert.IsType<ActionResult<IEnumerable<Employee>>>(actionResult);
+            var okObjectResult = Assert.IsType<OkObjectResult>(result.Result);
+            var employees = Assert.IsAssignableFrom<IEnumerable<Employee>>(okObjectResult.Value);
+            Assert.Equal(5, employees.Count());
+        }
     }
 }
