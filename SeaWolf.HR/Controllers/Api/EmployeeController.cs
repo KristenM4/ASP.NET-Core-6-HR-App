@@ -256,5 +256,30 @@ namespace SeaWolf.HR.Controllers.Api
                 return BadRequest("Failed to delete employee with Employee api");
             }
         }
+
+        //ASYNC
+
+        /// <summary>
+        /// Get all employees in the database (async)
+        /// </summary>
+        /// <returns>IEnumberable of Employees</returns>
+        /// <response code="200">Returns all employees asynchronously</response>
+        /// <response code="400">API has failed to get all employees</response>
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<IEnumerable<Employee>>> GetAllEmployeesAsync()
+        {
+            try
+            {
+                var allEmployees = await _employeeRepository.AllEmployeesAsync();
+                return Ok(allEmployees);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Failed to get Employee/GetAllEmployeesAsync: {ex}");
+                return BadRequest("Failed to get all employees from Employee api");
+            }
+        }
     }
 }

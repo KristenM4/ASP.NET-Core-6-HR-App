@@ -72,6 +72,14 @@
             <response code="404">Employee id is not valid</response>
             <response code="400">API failed to delete employee</response>
         </member>
+        <member name="M:SeaWolf.HR.Controllers.Api.EmployeeController.GetAllEmployeesAsync">
+            <summary>
+            Get all employees in the database (async)
+            </summary>
+            <returns>IEnumberable of Employees</returns>
+            <response code="200">Returns all employees asynchronously</response>
+            <response code="400">API has failed to get all employees</response>
+        </member>
         <member name="M:SeaWolf.HR.Controllers.Api.LocationController.GetAllLocations">
             <summary>
             Get all locations in the database
