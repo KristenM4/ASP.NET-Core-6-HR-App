@@ -40,11 +40,13 @@ namespace SeaWolf.HR.Mocks
 
             var mockEmployeeRepository = new Mock<IEmployeeRepository>();
             mockEmployeeRepository.Setup(repo => repo.AllEmployees).Returns(employees);
+            mockEmployeeRepository.Setup(repo => repo.AllEmployeesAsync()).ReturnsAsync(employees);
             // invalid id
             mockEmployeeRepository.Setup(repo => repo.GetEmployeeById(99))
                 .Returns(employees.FirstOrDefault(e => e.EmployeeId == 99));
             // valid id
             mockEmployeeRepository.Setup(repo => repo.GetEmployeeById(1)).Returns(employees[0]);
+
             mockEmployeeRepository.Setup(repo => repo.SearchEmployees("Salesperson"))
                 .Returns(employees.Where(e => e.Position == "Salesperson"));
             mockEmployeeRepository.Setup(repo => repo.AddEmployee(newEmployee));
